@@ -1,6 +1,7 @@
 var app = angular.module('madaish', [
       'ionic',
-      'ionic.cloud'
+      'ionic.cloud',
+      'ngResource'
 ]);
 
 app.run(function($ionicPlatform) {

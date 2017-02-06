@@ -16,9 +16,18 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         .state('base.timeline', {
             url: 'timeline',
             views: {
-                'content': {
+                'timeline': {
                     templateUrl: 'templates/timeline/main.html',
                     controller: 'TimelineController'
+                }
+            }
+        })
+        .state('base.explorer', {
+            url: 'explorer',
+            views: {
+                'explorer': {
+                    templateUrl: 'templates/explorer/main.html',
+                    controller: 'ExplorerController'
                 }
             }
         });
