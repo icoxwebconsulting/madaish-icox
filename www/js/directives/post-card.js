@@ -6,7 +6,7 @@ app.directive('postCard', function(){
             'type': '@',
             'data': '<'
         },
-        controller: 'postCardController',
-        templateUrl: 'post/card.html'
+        controller: 'PostCardController',
+        templateUrl: 'templates/post/card.html'
     };
 });

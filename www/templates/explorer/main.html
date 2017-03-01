@@ -1,9 +1,9 @@
-<ion-view title="Explora">
-    <ion-content class="mad-page-explore" overflow-scroll="true">
+<ion-view hide-nav-bar="true">
+    <ion-content class="page-explore" overflow-scroll="true">
 
         <ion-refresher
                 pulling-text="Desliza para recargar..."
-                on-refresh="reload()">
+                on-refresh="init()">
         </ion-refresher>
 
         <ion-list ng-if="categories">
@@ -14,12 +14,12 @@
             </ion-item>
         </ion-list>
 
-        <!--<post-card ng-repeat="post in posts" data="::post" type="timeline"></post-card>-->
+        <post-card ng-repeat="post in posts" data="::post" type="timeline"></post-card>
 
         <ion-infinite-scroll
                 ng-if="page"
-                distance="{{(page < 10 ? (10 - page) : 1)}}%"
-                on-infinite="nextPage()">
+                on-infinite="loadMore()"
+                distance="1%">
         </ion-infinite-scroll>
     </ion-content>
 </ion-view>

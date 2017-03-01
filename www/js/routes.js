@@ -12,13 +12,51 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             abstract: true,
             templateUrl: 'templates/base.html'
         })
-
+        .state('base.login', {
+            url: 'login',
+            views: {
+                'timeline': {
+                    templateUrl: 'templates/user/login/main.html',
+                    controller: 'LoginController',
+                    resolve: {
+                        auth: function(UserService, $q) {
+                            if (UserService.isLogged()) {
+                                return $q.reject("logged");
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .state('base.login-email', {
+            url: 'login/email',
+            views: {
+                'timeline': {
+                    templateUrl: 'templates/user/login/email.html',
+                    controller: 'LoginController',
+                    resolve: {
+                        auth: function(UserService, $q) {
+                            if (UserService.isLogged()) {
+                                return $q.reject("logged");
+                            }
+                        }
+                    }
+                }
+            }
+        })
         .state('base.timeline', {
             url: 'timeline',
             views: {
                 'timeline': {
                     templateUrl: 'templates/timeline/main.html',
-                    controller: 'TimelineController'
+                    controller: 'TimelineController',
+                    resolve: {
+                        auth: function(UserService, $q) {
+                            if (!UserService.isLogged()) {
+                                return $q.reject("not-logged");
+                            }
+                        }
+                    }
                 }
             }
         })
@@ -34,6 +72,6 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/timeline');
-    $ionicConfigProvider.views.maxCache(0);
+    // $ionicConfigProvider.views.maxCache(0);
 
 });

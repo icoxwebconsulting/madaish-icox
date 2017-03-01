@@ -1,17 +1,33 @@
-<ion-view view-title="Dashboard">
-    <ion-content class="padding">
-        <h2>Welcome to Ionic</h2>
-        <p>
-            This is the Ionic starter for tabs-based apps. For other starters and ready-made templates, check out the <a href="http://market.ionic.io/starters" target="_blank">Ionic Market</a>.
-        </p>
-        <p>
-            To edit the content of each tab, edit the corresponding template file in <code>www/templates/</code>. This template is <code>www/templates/tab-dash.html</code>
-        </p>
-        <p>
-            If you need help with your app, join the Ionic Community on the <a href="http://forum.ionicframework.com" target="_blank">Ionic Forum</a>. Make sure to <a href="http://twitter.com/ionicframework" target="_blank">follow us</a> on Twitter to get important updates and announcements for Ionic developers.
-        </p>
-        <p>
-            For help sending push notifications, join the <a href="https://apps.ionic.io/signup" target="_blank">Ionic Platform</a> and check out <a href="http://docs.ionic.io/docs/push-overview" target="_blank">Ionic Push</a>. We also have other services available.
-        </p>
+<ion-view>
+    <ion-content class="page-timeline" overflow-scroll="true">
+
+        <ion-refresher
+                pulling-text="Desliza para recargar..."
+                on-refresh="reload()">
+        </ion-refresher>
+
+        <post-card ng-repeat="post in posts" data="::post" type="timeline"></post-card>
+
+        <div ng-if="!page && posts.length == 0">
+            <div class="card">
+                <ion-item class="item-text-wrap">
+                    <p ng-if="!cards.length">
+                        Todavía no sigues a nadie. Empieza a seguir a otras fashionistas y disfruta de todo un universo de moda, belleza y lifestyle.
+                    </p>
+                </ion-item>
+            </div>
+
+            <div style="margin: 10px">
+                <a ui-sref="base.explorer" class="button mad-button-yellow button-block icon-left ion-android-compass shadow">Descubre tendencias, looks, tips de belleza...</a>
+                <a ui-sref="root.tabs.search" class="button mad-button-green button-block icon-left ion-ios-search shadow">Busca lo que más te gusta</a>
+                <a ui-sref="root.view.followSuggestions" class="button mad-button-purple button-block icon-left ion-star shadow">Fashionistas recomendadas</a>
+            </div>
+        </div>
+
+        <ion-infinite-scroll
+                ng-if="page"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
     </ion-content>
 </ion-view>

@@ -1,39 +1,21 @@
-app.service('UtilsService', function($window, $q, $timeout, $ionicLoading, $filter, $ionicHistory, $state, API){
+app.service('UtilsService', function($window, $q, $timeout, $ionicLoading, $ionicPopup, $filter, $ionicHistory, $state, API){
 
     var service = this;
 
-    this.NO_DELAY = 0;
-    this.FEEDBACK_DELAY = 1000;
-
-    var spinnerRequests = 0;
-    var syncSpinner = $q.defer();
-
-    this.showSpinner = function(when, until){
-
-        var show = $q.defer();
-
-        var start = ((typeof when == 'number') ? $timeout(when) : $q.resolve(when));
-        var stop = until ? $q.resolve(until) : syncSpinner.promise;
-
-        start.then(show.resolve);
-        stop.finally(show.reject);
-
-        show.promise.then(function(){
-            ++spinnerRequests;
-            $ionicLoading.show({
-                template: 'Cargando...'
-            });
-            stop.finally(function(){
-                if(!--spinnerRequests){
-                    $ionicLoading.hide();
-                }
-            });
+    this.showSpinner = function(){
+        $ionicLoading.show({
+            template: 'Cargando...'
         });
     };
 
     this.hideSpinner = function(){
-        syncSpinner.resolve();
-        syncSpinner = $q.defer();
+        $ionicLoading.hide();
+    };
+
+    this.showAlert = function(message){
+        $ionicPopup.alert({
+            title: message
+        });
     };
 
     this.filter = function(filterName, input, params){

@@ -8,6 +8,7 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 var uglify = require('gulp-uglify');
 var merge = require('merge-stream');
+var glob = require('glob');
 
 var paths = {
   sass: ['./scss/**/*.scss'],
@@ -16,7 +17,6 @@ var paths = {
 };
 
 gulp.task('default', ['sass', 'css', 'uglify']);
-
 
 gulp.task('sass', function(done) {
   gulp.src('./scss/ionic.app.scss')
@@ -61,11 +61,11 @@ gulp.task('uglify', function (done) {
 });
 
 
-gulp.task('watch', ['sass'], function() {
-  gulp.watch(paths.sass, ['sass']);
-  gulp.watch(paths.css, ['css']);
-  gulp.watch(paths.js, ['uglify']);
-});
+// gulp.task('watch', ['sass'], function() {
+//   gulp.watch(paths.sass, ['sass']);
+//   gulp.watch(paths.css, ['css']);
+//   gulp.watch(paths.js, ['uglify']);
+// });
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()
