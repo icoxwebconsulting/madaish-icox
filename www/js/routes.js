@@ -68,6 +68,15 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                     controller: 'ExplorerController'
                 }
             }
+        })
+        .state('user.profile', {
+            url: 'user/profile',
+//            views: {
+//                'profile': {
+                    templateUrl: 'templates/user/profile/main.html',
+                    controller: 'UserController'
+//                }
+//            }
         });
 
     // if none of the above states are matched, use this as the fallback
