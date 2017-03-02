@@ -69,14 +69,21 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
-        .state('user.profile', {
-            url: 'user/profile',
-//            views: {
-//                'profile': {
+        .state('base.user', {
+            url: 'user',
+            views: {
+                'user': {
                     templateUrl: 'templates/user/profile/main.html',
-                    controller: 'UserController'
-//                }
-//            }
+                    controller: 'UserController',
+                    resolve: {
+                        auth: function(UserService, $q) {
+                            if (!UserService.isLogged()) {
+                                return $q.reject("not-logged");
+                            }
+                        }
+                    }
+                }
+            }
         });
 
     // if none of the above states are matched, use this as the fallback

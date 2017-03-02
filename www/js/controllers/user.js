@@ -13,8 +13,10 @@ app.controller('UserController', function ($scope, $state, AuthService, UserServ
     //     // viewData.enableBack = true;
     // });
 
-    if ($state.current.name == 'user.profile') {
+    if ($state.current.name == 'base.user') {
+        console.info('entro en user profile');
 
     }
+
 
 });
