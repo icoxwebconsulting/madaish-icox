@@ -1,14 +1,29 @@
 <ion-view>
-    <ion-content  overflow-scroll="true">
-        <p>Hello, i'm leonard</p>
-        <p style="color:#000000;text-align:center;">
-            {{Profile.Description}}
-        </p>
-        <div mad-parse-links class="button-bar">
-            <a ng-show="Profile.FacebookFriendly" href="{{Profile.FacebookFriendly}}" class="button button-dark button-block button-clear icon ion-social-facebook"></a>
-            <a ng-show="Profile.TwitterFriendly" href="{{Profile.TwitterFriendly}}" class="button button-dark button-block button-clear icon ion-social-twitter"></a>
-            <a ng-show="Profile.InstagramFriendly" href="{{Profile.InstagramFriendly}}" class="button button-dark button-block button-clear icon ion-social-instagram-outline"></a>
-            <a ng-show="Profile.PinterestFriendly" href="{{Profile.PinterestFriendly}}" class="button button-dark button-block button-clear icon ion-social-pinterest"></a>
+    <ion-content overflow-scroll="true">
+        <ion-refresher
+                pulling-text="Desliza para recargar..."
+                on-refresh="reload()">
+        </ion-refresher>
+        <div class="card">
+            <user-card data="profile" widget="{{::widget}}"></user-card>
+            <div class="button-bar">
+                <a ui-sref="root.view.follows({userName: Profile.FriendlyUrlUserName})" class="button button-dark button-small button-block button-clear">
+                    {{Profile.FollowedsCount}} Siguiendo
+                </a>
+                <a ui-sref="root.view.followers({userName: Profile.FriendlyUrlUserName})" class="button button-dark button-small button-block button-clear">
+                    {{Profile.FollowersCount}} Seguidores
+                </a>
+            </div>
+            profile => {{profile}}
+            <p style="color:#000000;text-align:center;">
+                {{Profile.Description}}
+            </p>
+            <div mad-parse-links class="button-bar">
+                <a ng-show="Profile.FacebookFriendly" href="{{Profile.FacebookFriendly}}" class="button button-dark button-block button-clear icon ion-social-facebook"></a>
+                <a ng-show="Profile.TwitterFriendly" href="{{Profile.TwitterFriendly}}" class="button button-dark button-block button-clear icon ion-social-twitter"></a>
+                <a ng-show="Profile.InstagramFriendly" href="{{Profile.InstagramFriendly}}" class="button button-dark button-block button-clear icon ion-social-instagram-outline"></a>
+                <a ng-show="Profile.PinterestFriendly" href="{{Profile.PinterestFriendly}}" class="button button-dark button-block button-clear icon ion-social-pinterest"></a>
+            </div>
         </div>
     </ion-content>
 </ion-view>
