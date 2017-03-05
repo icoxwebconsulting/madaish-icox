@@ -69,6 +69,24 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
+        .state('base.search', {
+            url: 'search',
+            views: {
+                'search': {
+                    templateUrl: 'templates/search/main.html',
+                    controller: 'SearchController'
+                }
+            }
+        })
+        .state('base.search-detail', {
+            url: 'search/detail',
+            views: {
+                'search': {
+                    templateUrl: 'templates/search/main.html',
+                    controller: 'SearchController'
+                }
+            }
+        })
         .state('base.user', {
             url: 'user',
             views: {

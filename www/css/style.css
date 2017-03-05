@@ -13,9 +13,14 @@
 }
 
 .page-landing {
-    background: url("../img/fondo-1.jpg") no-repeat fixed center;
+    background: url("../img/bg.jpg") no-repeat fixed center;
     background-size: cover;
     padding: 10% 5%;
+}
+
+.page-search{
+    background: url("../img/bg-search.jpg") no-repeat fixed center;
+    background-size: cover;
 }
 
 .button-facebook {
