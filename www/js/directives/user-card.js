@@ -9,7 +9,7 @@ app.directive('userCard', function(){
             'data': '='
         },
         controller: 'UserCardController',
-        templateUrl: 'templates/user/profile/detail.html'
+        templateUrl: 'templates/user/profile/card.html'
     };
 
 });

@@ -1,0 +1,24 @@
+<ion-view title="Post" class="post-container">
+    <ion-content class="mad-page-post" overflow-scroll="true">
+
+        <post-card ng-if="post" data="post" type="{{::type}}"></post-card>
+        <div class="comment-block">
+            <div class="comment-div">
+                <div class="comment-header">
+                    <h4 class="comment-title">Comentarios</h4>
+                </div>
+                <input class="input-comment" placeholder="Deja tu comentario..." ng-model="comment.new">
+                <button class="button button-full button-calm button-comment" ng-click="addComment()" ng-disabled="checkNewComment()">
+                    Comentar
+                </button>
+            </div>
+            <div ng-if="comments.length > 0">
+                <!--<post-comment ng-repeat="comment in comments" comment="::comment" op="post.data.author">-->
+                <post-comment ng-repeat="item in comments" comment="::item.Comment" owner="post.UserId" user="currentUserId" >
+            </div>
+            <div ng-if="comments.length == 0" class="no-comment">
+                No existen comentarios
+            </div>
+        </div>
+    </ion-content>
+</ion-view>

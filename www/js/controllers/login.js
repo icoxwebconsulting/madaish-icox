@@ -14,7 +14,7 @@ app.controller('LoginController', function ($scope, $state, AuthService, UserSer
     // });
 
 
-    if ($state.current.name == 'base.login-email') {
+    if ($state.current.name == 'tabs.login-email') {
         $scope.login = {};
         $scope.login.valid = false;
         $scope.login.forgotPassword = false;
@@ -38,7 +38,7 @@ app.controller('LoginController', function ($scope, $state, AuthService, UserSer
                     response.CurrentUser.Token = response.Token;
                     console.info('response',response);
                     UserService.setUser(response.CurrentUser);
-                    $state.go('base.timeline');
+                    $state.go('tabs.timeline');
                 }else{
                     UtilsService.hideSpinner();
                     UtilsService.showAlert('Datos invalidos');
@@ -51,7 +51,7 @@ app.controller('LoginController', function ($scope, $state, AuthService, UserSer
         };
     }
 
-    if ($state.current.name == 'base.login') {
+    if ($state.current.name == 'tabs.login') {
 
         var fbLoginSuccess = function (response) {
             if (!response.authResponse) {

@@ -2,6 +2,16 @@
 app.factory('PostService', function ($resource, API, UserService) {
 
     var resource = $resource(API.url, {}, {
+        'getPost':{
+            method: 'GET',
+            isArray: false,
+            url: API.url + 'posts/getpost'
+        },
+        'getLook':{
+            method: 'GET',
+            isArray: false,
+            url: API.url + 'looks/getlook'
+        },
         'getTimeline': {
             method: 'GET',
             isArray: false,

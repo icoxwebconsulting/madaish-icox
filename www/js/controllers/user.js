@@ -1,6 +1,6 @@
 app.controller('UserController', function ($scope, $state, $stateParams, AuthService, UserService, SocialService, UtilsService) {
 
-    if ($state.current.name == 'base.user') {
+    if ($state.current.name == 'tabs.user') {
 
         $scope.init = function(){
             $scope.user = [];
@@ -22,7 +22,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
     }
 
 
-    if ($state.current.name == 'base.fashionist') {
+    if ($state.current.name == 'tabs.fashionist') {
 
         $scope.loadFashionist = function(){
             $scope.user = {};

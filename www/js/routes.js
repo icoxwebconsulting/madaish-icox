@@ -12,7 +12,13 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             abstract: true,
             templateUrl: 'templates/base.html'
         })
-        .state('base.login', {
+        .state('tabs', {
+            url: '/tabs/',
+            abstract: true,
+            templateUrl: 'templates/tabs.html',
+            controller: 'TabsController'
+        })
+        .state('tabs.login', {
             url: 'login',
             views: {
                 'timeline': {
@@ -28,7 +34,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
-        .state('base.login-email', {
+        .state('tabs.login-email', {
             url: 'login/email',
             views: {
                 'timeline': {
@@ -44,7 +50,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
-        .state('base.timeline', {
+        .state('tabs.timeline', {
             url: 'timeline',
             views: {
                 'timeline': {
@@ -60,7 +66,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
-        .state('base.explorer', {
+        .state('tabs.explorer', {
             url: 'explorer',
             views: {
                 'explorer': {
@@ -69,7 +75,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
-        .state('base.search', {
+        .state('tabs.search', {
             url: 'search',
             views: {
                 'search': {
@@ -78,7 +84,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
-        .state('base.search-detail', {
+        .state('tabs.search-detail', {
             url: 'search/detail/{type}/{query}',
             views: {
                 'search': {
@@ -87,7 +93,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
-        .state('base.user', {
+        .state('tabs.user', {
             url: 'user',
             views: {
                 'user': {
@@ -106,22 +112,24 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         .state('base.fashionist', {
             url: 'user/fashionist/{username}',
             views: {
-                'user': {
+                'content': {
                     templateUrl: 'templates/user/profile/main.html',
-                    controller: 'UserController',
-                    resolve: {
-                        auth: function(UserService, $q) {
-                            if (!UserService.isLogged()) {
-                                return $q.reject("not-logged");
-                            }
-                        }
-                    }
+                    controller: 'UserController'
+                }
+            }
+        })
+        .state('base.post', {
+            url: 'post/{content}/{userName}/{postName}',
+            views: {
+                'content': {
+                    templateUrl: 'templates/post/detail.html',
+                    controller: 'PostController'
                 }
             }
         });
 
     // if none of the above states are matched, use this as the fallback
-    $urlRouterProvider.otherwise('/timeline');
+    $urlRouterProvider.otherwise('/tabs/timeline');
     // $ionicConfigProvider.views.maxCache(0);
 
 });

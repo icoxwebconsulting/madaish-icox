@@ -1,6 +1,6 @@
 app.controller('SearchController', function ($scope, $state, $stateParams, PostService, UtilsService) {
 
-    if ($state.current.name == 'base.search') {
+    if ($state.current.name == 'tabs.search') {
 
         $scope.init = function(){
             $scope.message = 'Descubre fashionistas como tú y encuentra contenidos muy molones de moda, belleza y lifestyle.';
@@ -69,7 +69,7 @@ app.controller('SearchController', function ($scope, $state, $stateParams, PostS
     }
 
 
-    if ($state.current.name == 'base.search-detail') {
+    if ($state.current.name == 'tabs.search-detail') {
         var type = $stateParams.type;
 
         $scope.page = 0;

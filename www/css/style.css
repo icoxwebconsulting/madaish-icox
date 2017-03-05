@@ -54,3 +54,213 @@ label.item-checkbox, label.item-input {
 .item-input input{
     color: #FFFFFF;
 }
+
+.post-container .item-body * {
+    width: 100%;
+    height: auto;
+}
+
+.tabs-top .tab-nav {
+    top: 0px !important;
+}
+
+ion-popover-view {
+    height: auto !important;
+}
+
+ion-popover-view ion-content {
+    position: relative !important;
+}
+
+.platform-android ion-popover-view {
+    margin-top: 10px !important;
+}
+
+ion-modal-view {
+    background: rgba(255,255,255,0.9) !important;
+}
+.no-bg {
+    background: rgba(0,0,0,0) !important;
+}
+
+.post-container .item-body * {
+    width: 100%;
+    height: auto;
+}
+
+.video-preview::before{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-40%, -75%);
+    -moz-transform: translate(-40%, -75%);
+    -ms-transform: translate(-40%, -75%);
+    -o-transform: translate(-40%, -75%);
+    transform: translate(-40%, -75%);
+    width: 0;
+    height: 0;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 30px solid white;
+    z-index: 9001;
+}
+
+.video-preview::after{
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -60%);
+    -moz-transform: translate(-50%, -60%);
+    -ms-transform: translate(-50%, -60%);
+    -o-transform: translate(-50%, -60%);
+    transform: translate(-50%, -60%);
+    display: block;
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    border: 5px solid white;
+    background-color: #A93667;
+    -webkit-opacity: 0.5;
+    -moz-opacity: 0.5;
+    opacity: 0.5;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px; height: 0; overflow: hidden;
+}
+
+.video-container iframe,
+.video-container object,
+.video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.button.button-royal {
+    background-color: #aab8c2;
+}
+
+.post-card-content{
+    margin: 5px 10px;
+}
+
+.iframe-md{
+    margin: 4px !important;
+}
+
+.iframe-md iframe{
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.iframe-md img{
+    width: 100% !important;
+}
+
+.ion-comment {
+    font-size: 12px;
+    padding: 6px 15px;
+    overflow: visible;
+    white-space: normal;
+    border: none;
+}
+.ion-comment .item-options .button {
+    background-color: #f8f8f8;
+}
+.ion-comment--text p {
+    overflow: visible;
+    white-space: normal;
+}
+.ion-comment .item-content,
+.ion-comment .item-content p {
+    padding: 0;
+    overflow: visible;
+    white-space: normal;
+    font-size: 13px;
+    color: #3f3f3f
+}
+.ion-comment--author {
+    color: #9494ff;
+    margin-bottom: 6px;
+}
+.ion-comment--op {
+    color: #8899a6;
+}
+.ion-comment--replies {
+    color: #8899a6;
+    text-align: right;
+}
+.ion-comment--score {
+    text-align: right;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #8899a6;
+    -webkit-transition: color 0.3s;
+    transition: color 0.3s;
+}
+.ion-comment--container {
+    background-color: #f8f8f8;
+}
+.ion-comment--children {
+    margin-left: 10px;
+}
+
+.input-comment::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+    color:    #000000;
+    margin-left: 10px;
+}
+.input-comment:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color:    #000000;
+    margin-left: 10px;
+}
+.input-comment::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color:    #000000;
+    margin-left: 10px;
+}
+.input-comment:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color:    #000000;
+    margin-left: 10px;
+}
+
+.comment-block{
+    padding:10px;
+}
+
+
+.input-comment{
+    height: 35px;
+    width: 100%;
+    font-size: 12px;
+    border: 1px #AAB8C2 solid;
+}
+
+.no-comment{
+    font-size: 12px;
+    text-align: center;
+    color: #AAB8C2;
+    font-weight: 500;
+}
+
+.button-comment{
+    min-height: 35px !important;
+    line-height: 0px !important;
+    font-size: 13px !important;;
+}
+
+.comment-header{
+    border-left: 4px #11c1f3 solid;
+}
+
+.comment-title{
+    font-weight: 600;
+    font-size: 14px;
+    margin-left: 10px;
+    padding: 5px;
+}
