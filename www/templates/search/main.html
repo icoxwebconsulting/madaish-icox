@@ -1,0 +1,35 @@
+<ion-view>
+    <ion-content class="page-search" overflow-scroll="true">
+
+        <form ng-submit="search()">
+            <div align-title="left" class="bar bar-header item-input-inset">
+                <label class="item-input-wrapper" style="background-color: white">
+                    <i class="icon ion-ios-search placeholder-icon"></i>
+                    <input ng-model="form.query" type="search" placeholder="¿Qué estás buscando?" style="width: 100%">
+                </label>
+                <button class="button" ng-disabled="!form.query">
+                    Buscar
+                </button>
+            </div>
+        </form>
+
+        <div ng-if="message" class="card">
+            <ion-item class="item-text-wrap">
+                <p>{{message}}</p>
+            </ion-item>
+        </div>
+
+        <ion-list>
+            <ion-item ng-repeat="result in results"
+                      ng-show="result.count"
+                      ui-sref="base.search-detail({type: result.type, query: query})"
+                      class="item-icon-right mad-text-corporate">
+                {{::result.title}}
+                <span class="item-note">Ver los {{result.count}} resultados</span>
+                <i class="icon ion-android-arrow-dropright"></i>
+            </ion-item>
+        </ion-list>
+
+
+    </ion-content>
+</ion-view>

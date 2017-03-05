@@ -1,0 +1,33 @@
+<ion-view>
+    <ion-content class="page-timeline" overflow-scroll="true">
+
+        <ion-refresher
+                pulling-text="Desliza para recargar..."
+                on-refresh="reload()">
+        </ion-refresher>
+
+        <post-card ng-repeat="post in posts" data="::post" type="timeline"></post-card>
+
+        <div ng-if="!page && posts.length == 0">
+            <div class="card">
+                <ion-item class="item-text-wrap">
+                    <p ng-if="!cards.length">
+                        Todavía no sigues a nadie. Empieza a seguir a otras fashionistas y disfruta de todo un universo de moda, belleza y lifestyle.
+                    </p>
+                </ion-item>
+            </div>
+
+            <div style="margin: 10px">
+                <a ui-sref="base.explorer" class="button mad-button-yellow button-block icon-left ion-android-compass shadow">Descubre tendencias, looks, tips de belleza...</a>
+                <a ui-sref="root.tabs.search" class="button mad-button-green button-block icon-left ion-ios-search shadow">Busca lo que más te gusta</a>
+                <a ui-sref="root.view.followSuggestions" class="button mad-button-purple button-block icon-left ion-star shadow">Fashionistas recomendadas</a>
+            </div>
+        </div>
+
+        <ion-infinite-scroll
+                ng-if="page"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>

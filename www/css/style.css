@@ -1,0 +1,56 @@
+/* Empty. Add your own CSS if you like */
+
+.back-button{
+    color: #444444 !important;
+}
+
+.header-item{
+    display: none;
+}
+
+.tabs-top > .tabs, .tabs.tabs-top{
+    top: 0 !important;
+}
+
+.page-landing {
+    background: url("../img/bg.jpg") no-repeat fixed center;
+    background-size: cover;
+    padding: 10% 5%;
+}
+
+.page-search{
+    background: url("../img/bg-search.jpg") no-repeat fixed center;
+    background-size: cover;
+}
+
+.button-facebook {
+    color: #FFF;
+    background-color: #506B98;
+    background-color: rgba(80,107,152,.9);
+    border-radius: 10px;
+}
+
+.button-login {
+    color: #FFF;
+    background: rgba(181,51,99,.9);
+    border-radius: 10px;
+}
+
+.button-register {
+    color: #FFF;
+    background-color: transparent;
+    border-color: #FFF;
+    border-radius: 10px;
+}
+
+label.item-checkbox, label.item-input {
+    background-color: transparent;
+    border-color: #FFF;
+    border-radius: 10px;
+    margin: 10px 0;
+    color: #fff;
+}
+
+.item-input input{
+    color: #FFFFFF;
+}

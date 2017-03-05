@@ -1,0 +1,25 @@
+<ion-view hide-nav-bar="true">
+    <ion-content class="page-explore" overflow-scroll="true">
+
+        <ion-refresher
+                pulling-text="Desliza para recargar..."
+                on-refresh="init()">
+        </ion-refresher>
+
+        <ion-list ng-if="categories">
+            <ion-item ng-repeat="category in categories" ui-sref="root.view.category({category: category.tag})" class="item-icon-right mad-text-corporate">
+                {{category.title}}
+                <span class="item-note">{{category.subtitle}}</span>
+                <i class="icon ion-chevron-right"></i>
+            </ion-item>
+        </ion-list>
+
+        <post-card ng-repeat="post in posts" data="::post" type="timeline"></post-card>
+
+        <ion-infinite-scroll
+                ng-if="page"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>
