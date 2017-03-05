@@ -1,0 +1,22 @@
+<ion-view>
+    <ion-content class="page-search" overflow-scroll="true">
+
+        <div ng-repeat="post in posts" ng-click="showDetail(post)" class="card">
+            <ion-item class="item-thumbnail-left">
+                <img ng-src="{{getImageUrl(post.Image)}}">
+                <h2>
+                    {{post.TitleorName}}
+                </h2>
+                <p>
+                    {{post.Description}}
+                </p>
+            </ion-item>
+        </div>
+
+        <ion-infinite-scroll
+                ng-if="page"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+    </ion-content>
+</ion-view>
