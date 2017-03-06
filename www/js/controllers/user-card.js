@@ -1,4 +1,4 @@
-app.controller('UserCardController', function ($scope, GLOBAL, PostService, UserService, UtilsService, SocialService) {
+app.controller('UserCardController', function ($scope, $state, PostService, UserService, UtilsService, SocialService) {
 
     var user = $scope.data;
 
@@ -45,7 +45,7 @@ app.controller('UserCardController', function ($scope, GLOBAL, PostService, User
     };
 
     $scope.settings = function(){
-        $state.go("root.view.settings");
+        $state.go("base.user-setting");
     };
 
 

@@ -6,8 +6,6 @@ app.controller('TabsController', function ($scope, $state, $ionicPopover) {
         }).then(function(popover) {
             $scope.popover = popover;
         });
-
-        console.info('par de horas');
     };
 
     $scope.init();

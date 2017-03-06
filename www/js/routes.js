@@ -109,6 +109,15 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
+        .state('base.user-setting', {
+            url: 'user/setting',
+            views: {
+                'content': {
+                    templateUrl: 'templates/user/setting/main.html',
+                    controller: 'UserController'
+                }
+            }
+        })
         .state('base.fashionist', {
             url: 'user/fashionist/{username}',
             views: {
