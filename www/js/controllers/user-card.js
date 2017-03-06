@@ -9,12 +9,13 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
         if($scope.widget == 'follow' && user.FriendlyUrlUserName == UserService.getUser().FriendlyUrlUserName){
             $scope.widget = '';
         }
+        console.info('widget', $scope.widget);
 
         switch($scope.widget){
             case '': break;
             case 'follow': $scope.showFollow = true; break;
             case 'settings': $scope.showSettings = true; break;
-            default: $scope.showCustom = true;
+            default: $scope.showCustom = true; break;
         }
     };
 

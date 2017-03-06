@@ -37,7 +37,14 @@ app.factory('PostService', function ($resource, API, UserService) {
         'deletePost':{
             method: 'POST',
             isArray: false,
-            url: API.url + 'mypost/delete'
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url + 'mypost/delete/:id'
+        },
+        'deleteLook':{
+            method: 'POST',
+            isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url + 'mylook/delete/:id'
         }
     });
 

@@ -1,9 +1,76 @@
 app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL, UtilsService, UserService, PostService, $ionicPopup) {
 
-    var post = $scope.data;
-    var user = $scope.data.Profile;
-    var waitForDoubleClick = null;
-    var currentUser = UserService.getUser();
+
+    $scope.delete = function () {
+
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Eliminar Publicación',
+            template: '¿estas seguro que desea eliminar esta publicación?'
+        });
+
+        confirmPopup.then(function (response) {
+            if (response) {
+                UtilsService.showSpinner();
+
+                var post = new PostService.resource();
+                if( self.post.ContentType == 1)
+                {
+                    return post.$deleteLook({id: self.post.Id},function (response) {
+                        UtilsService.hideSpinner();
+                        return response;
+                    }, function (error) {
+                        UtilsService.hideSpinner();
+                        UtilsService.showAlert('Error en conexion');
+                        return false;
+                    });
+                }else{
+                    return post.$deletePost({id: self.post.Id},function (response) {
+                        UtilsService.hideSpinner();
+                        return response;
+                    }, function (error) {
+                        UtilsService.hideSpinner();
+                        UtilsService.showAlert('Error en conexion');
+                        return false;
+                    });
+                }
+            }
+        });
+    };
+
+    $scope.init = function(){
+        self.post = $scope.data;
+        self.user = $scope.data.Profile;
+        self.waitForDoubleClick = null;
+        self.currentUser = UserService.getUser();
+
+
+        switch($scope.type){
+            case 'post':
+                $scope.subtitle = self.post.Type;
+                $scope.content = self.post.Text;
+                $scope.video = self.post.Video;
+                $scope.widget = 'follow';
+                break;
+            case 'look':
+                $scope.subtitle = self.post.Category.Name;
+                $scope.content = self.post.Text || post.Description;
+                $scope.widget = 'follow';
+                break;
+            default:
+                if(!self.post.Image && self.post.Text){
+                    $scope.data.Image = (self.post.Text.match(/\<img\s+src\s*\=\s*\"([^\"]+)\"/i) || [])[1];
+                }
+                $scope.subtitle = UtilsService.filter('amTimeAgo', self.post.PublishDate);
+        }
+
+        if(self.currentUser.Id == self.user.UserId){
+            $scope.widget = 'ion-trash-b';
+            $scope.callback = $scope.delete;
+        }
+    };
+
+    $scope.init();
+
 
     $scope.getImageUrl = function(image){
         return UtilsService.getImageUrl(image);
@@ -15,14 +82,14 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
 
         var delay = ($scope.data.isLiked || !$scope.data.Image) ? 0 : 300;
 
-        waitForDoubleClick = $timeout(function(){
+        self.waitForDoubleClick = $timeout(function(){
 
-            waitForDoubleClick = null;
+            self.waitForDoubleClick = null;
 
-            $state.go('root.view.post', {
-                content: (post.ContentType == 1) ? 'look' : 'post',
-                userName: post.Profile.FriendlyUrlUserName,
-                postName: post.FriendlyUrlTitle
+            $state.go('base.post', {
+                content: (self.post.ContentType == 1) ? 'look' : 'post',
+                userName: self.post.Profile.FriendlyUrlUserName,
+                postName: self.post.FriendlyUrlTitle
             });
         }, delay);
     };
@@ -31,7 +98,7 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
 
         if($scope.data.isLiked) return;
 
-        if($timeout.cancel(waitForDoubleClick)){
+        if($timeout.cancel(self.waitForDoubleClick)){
             $scope.like();
             $event.stopPropagation();
         }
@@ -43,8 +110,8 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
         if(UserService.isLogged())
         {
             var currentPost = new PostService.resource();
-            currentPost.type = (post.ContentType == 1) ? 'Look' : 'Post';
-            currentPost.id = post.Id;
+            currentPost.type = (self.post.ContentType == 1) ? 'Look' : 'Post';
+            currentPost.id = self.post.Id;
 
             return currentPost.$setLike(function (response) {
                 return response;
@@ -62,62 +129,10 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
 
 
 
-    $scope.delete = function () {
 
-        var confirmPopup = $ionicPopup.confirm({
-            title: 'Eliminar Publicación',
-            template: '¿estas seguro que desea eliminar esta publicación?'
-        });
 
-        confirmPopup.then(function (response) {
-            if (response) {
-                UtilsService.showSpinner();
 
-                var post = new PostService.resource();
-                post.type = (post.ContentType == 1) ? 'Look' : 'Post';
-                post.id = post.Id;
-                console.log('post', post);
 
-                return post.deletePost(function (response) {
-                    return response;
-                }, function (error) {
-                    UtilsService.hideSpinner();
-                    UtilsService.showAlert('Error en conexion');
-                    return false;
-                });
-
-            }
-        });
-    };
-
-    switch($scope.type){
-        case 'post':
-            $scope.subtitle = post.Type;
-            $scope.content = post.Text;
-            $scope.video = post.Video;
-            $scope.widget = 'follow';
-            break;
-        case 'look':
-            $scope.subtitle = post.Category.Name;
-            $scope.content = post.Text || post.Description;
-            $scope.widget = 'follow';
-            break;
-        default:
-            if(!post.Image && post.Text){
-                $scope.data.Image = (post.Text.match(/\<img\s+src\s*\=\s*\"([^\"]+)\"/i) || [])[1];
-            }
-            $scope.subtitle = UtilsService.filter('amTimeAgo', post.PublishDate);
-            $scope.content = '';
-            $scope.widget = '';
-    }
-
-    if(user != null)
-    {
-        if(currentUser.FriendlyUrlUserName == user.FriendlyUrlUserName){
-            $scope.widget = 'ion-trash-b';
-            $scope.callback = $scope.delete;
-        }
-    }
 
 
 
