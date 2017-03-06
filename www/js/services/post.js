@@ -33,6 +33,11 @@ app.factory('PostService', function ($resource, API, UserService) {
             method: 'GET',
             isArray: false,
             url: API.url  + 'Search/search'
+        },
+        'deletePost':{
+            method: 'POST',
+            isArray: false,
+            url: API.url + 'mypost/delete'
         }
     });
 

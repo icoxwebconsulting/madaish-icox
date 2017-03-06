@@ -1,9 +1,9 @@
-app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL, UtilsService, UserService, PostService) {
+app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL, UtilsService, UserService, PostService, $ionicPopup) {
 
     var post = $scope.data;
     var user = $scope.data.Profile;
     var waitForDoubleClick = null;
-    var currentUser = UserService.getUser;
+    var currentUser = UserService.getUser();
 
     $scope.getImageUrl = function(image){
         return UtilsService.getImageUrl(image);
@@ -60,18 +60,34 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
 
     };
 
-    $scope.delete = function(){
-        if(confirm("Eliminar esta publicación. ¿Está seguro?")){
-            var endpoint = (post.ContentType == 1) ? apiService.deleteLook : apiService.deletePost;
-            var request = endpoint(post.Id).then(function(){
-                userService.checkCurrentUser().then(function(currentUser){
-                    apiService.getUser(currentUser.FriendlyUrlUserName, true);
-                    $scope.$root.$emit('profile.update');
-                    $state.go('root.tabs.profile');
+
+
+    $scope.delete = function () {
+
+        var confirmPopup = $ionicPopup.confirm({
+            title: 'Eliminar Publicación',
+            template: '¿estas seguro que desea eliminar esta publicación?'
+        });
+
+        confirmPopup.then(function (response) {
+            if (response) {
+                UtilsService.showSpinner();
+
+                var post = new PostService.resource();
+                post.type = (post.ContentType == 1) ? 'Look' : 'Post';
+                post.id = post.Id;
+                console.log('post', post);
+
+                return post.deletePost(function (response) {
+                    return response;
+                }, function (error) {
+                    UtilsService.hideSpinner();
+                    UtilsService.showAlert('Error en conexion');
+                    return false;
                 });
-            });
-            utilsService.showSpinner(true, request);
-        }
+
+            }
+        });
     };
 
     switch($scope.type){
