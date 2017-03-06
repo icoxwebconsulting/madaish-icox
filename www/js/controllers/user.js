@@ -19,7 +19,9 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
                         post.FriendlyUrlTitle = post.FriendlyUrlLookTitle;
                     }
                     post.Type = post.Category.Name;
-                })
+                    $scope.posts.push(post);
+                });
+
             });
             $scope.widget = 'settings';
 
