@@ -1,7 +1,8 @@
 app.controller('UserCardController', function ($scope, GLOBAL, PostService, UserService, UtilsService, SocialService) {
 
+    var user = $scope.data;
+
     $scope.init = function(){
-        var user = $scope.data;
 
         $scope.followsRef = 100; //UserService.getFollowsReference();
 

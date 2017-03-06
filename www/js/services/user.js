@@ -45,7 +45,7 @@ app.factory('UserService', function ($resource, API, $localStorage, $ionicPush, 
         data.os = $localStorage.os;
         unRegisterDevice(data).then(function(response){
             $localStorage.user = {};
-            $state.go("base.login");
+            $state.go("tabs.login");
         });
     }
 

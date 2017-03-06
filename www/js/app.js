@@ -53,11 +53,11 @@ app.run(function ($rootScope, $ionicPlatform, $state) {
             switch (error) {
                 case "not-logged":
                     event.preventDefault();
-                    $state.go("base.login");
+                    $state.go("tabs.login");
                     break;
                 case "logged":
                     event.preventDefault();
-                    $state.go("base.timeline");
+                    $state.go("tabs.timeline");
                     break;
             }
 

@@ -4,7 +4,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
 
         $scope.init = function(){
             $scope.user = [];
-            UserService.resource.getFashionist({user: UserService.getUser().userName}).$promise.then(function(data){
+            UserService.resource.getFashionist({user: UserService.getUser().Name}).$promise.then(function(data){
                 $scope.user = angular.extend({}, data.Profile, data.extraInfo);
             });
             $scope.widget = 'settings';
@@ -12,7 +12,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
         };
 
         $scope.profile = function () {
-            SocialService.resource.getfollowed({friendlyUserName: $scope.user.userName}).$promise.then(function (data) {
+            SocialService.resource.getfollowed({friendlyUserName: UserService.getUser().FriendlyUrlUserName}).$promise.then(function (data) {
                 console.log('data', data);
             })
         };

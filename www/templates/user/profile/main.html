@@ -14,7 +14,6 @@
                     {{user.FollowersCount}} Seguidores
                 </a>
             </div>
-            user => {{user}}
             <p style="color:#000000;text-align:center;">
                 {{user.Description}}
             </p>
@@ -25,5 +24,8 @@
                 <a ng-show="user.PinterestFriendly" href="{{user.PinterestFriendly}}" class="button button-dark button-block button-clear icon ion-social-pinterest"></a>
             </div>
         </div>
+
+        <post-card ng-repeat="card in Results" data="card"></post-card>
+
     </ion-content>
 </ion-view>
