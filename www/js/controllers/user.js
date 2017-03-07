@@ -1,4 +1,4 @@
-app.controller('UserController', function ($scope, $state, $stateParams, AuthService, UserService, SocialService, UtilsService) {
+app.controller('UserController', function ($scope, $state, $stateParams, AuthService, UserService, SocialService, UtilsService, $rootScope) {
 
     if ($state.current.name == 'tabs.user') {
 
@@ -35,6 +35,10 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
 
         $scope.init();
 
+        $rootScope.$on('post:refresh', function(event, args) {
+            console.log('$rootScope.$on | post:refresh');
+            $scope.init();
+        });
     }
 
 
