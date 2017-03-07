@@ -26,6 +26,10 @@ app.controller('PostController', function ($rootScope, $scope, $state, $statePar
         $scope.loadPost();
     });
 
+    $rootScope.$on('post:refresh', function(event, args) {
+        self.loadPost();
+    });
+
     $scope.checkNewComment = function(){
         if(typeof $scope.comment.new == 'undefined')
             return true;

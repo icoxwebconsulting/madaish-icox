@@ -16,6 +16,7 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
                 if( self.post.ContentType == 1)
                 {
                     return post.$deleteLook({id: self.post.Id},function (response) {
+                        $scope.$emit('post:refresh', true);
                         UtilsService.hideSpinner();
                         return response;
                     }, function (error) {
@@ -25,6 +26,7 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
                     });
                 }else{
                     return post.$deletePost({id: self.post.Id},function (response) {
+                        $scope.$emit('post:refresh', true);
                         UtilsService.hideSpinner();
                         return response;
                     }, function (error) {
