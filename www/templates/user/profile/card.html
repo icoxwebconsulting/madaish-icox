@@ -1,8 +1,8 @@
 <ion-item class="item-icon-right">
     <ion-item class="item-avatar" ng-click="showFashionist()">
         <img ng-src="{{getImageUrl(data.Avatar)}}">
-        <h2>{{::data.Name}}</h2>
-        <p>@{{::data.FriendlyUrlUserName}}</p>
+        <h2>{{::data.UserName}}</h2>
+        <p>{{::label}}{{::data.FriendlyUrlName}}</p>
     </ion-item>
     <i ng-if="::showFollow" ng-click="follow()" class="icon" ng-class="{'ion-ios-person': followsRef[data.FriendlyUrlUserName], 'ion-ios-personadd-outline': !followsRef[data.FriendlyUrlUserName]}"></i>
     <i ng-if="::showSettings" ng-click="settings()" class="icon ion-ios-settings-strong"></i>

@@ -11,10 +11,20 @@ app.factory('SocialService', function ($resource, API, $localStorage) {
             isArray: false,
             url: API.url  + 'social/unfollow'
         },
-        'getfollowed': {
+        'getFollowed': {
             method: 'GET',
             isArray: false,
             url: API.url  + 'social/getfollowed'
+        },
+        'getFollowers': {
+            method: 'GET',
+            isArray: false,
+            url: API.url  + 'social/getfollowers'
+        },
+        'postFollowSuggestions': {
+            method: 'POST',
+            isArray: true,
+            url: API.url  + 'social/FollowDefaultSuggestion'
         },
         'createComment': {
             method: 'POST',

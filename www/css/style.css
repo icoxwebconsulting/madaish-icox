@@ -291,3 +291,51 @@ ion-modal-view {
 .item-icon-right{
     padding:0;
 }
+
+.item-icon-right .icon {
+    right: 11px;
+    font-size: 26px!important;
+}
+
+.item-text-wrap p {
+    color: #A93667;
+}
+
+.item-text-wrap {
+    text-align: center;
+    font-style: italic;
+}
+
+.tab-item-active {
+    color: #A93667!important;
+    border-color: #A93667!important;
+}
+
+.button-like {
+    color: #FFF!important;
+    background-color: #AAB8C2!important;
+}
+
+.text-corporate {
+    color: #A93667!important;
+}
+
+.text-top {
+    margin-top: 0px;
+    color: #000000;
+}
+
+.img-auto-size {
+    height: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.share-text-color {
+    color:#000000;
+}
+
+.pinterest-color {
+    color:#FFFFFF;
+}

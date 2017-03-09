@@ -10,6 +10,7 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
             $scope.widget = '';
         }
         console.info('widget', $scope.widget);
+        $scope.label = '@';
 
         switch($scope.widget){
             case '': break;

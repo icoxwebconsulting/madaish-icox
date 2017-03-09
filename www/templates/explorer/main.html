@@ -7,7 +7,7 @@
         </ion-refresher>
 
         <ion-list ng-if="categories">
-            <ion-item ng-repeat="category in categories" ui-sref="root.view.category({category: category.tag})" class="item-icon-right mad-text-corporate">
+            <ion-item ng-repeat="category in categories" ui-sref="root.view.category({category: category.tag})" class="item-icon-right text-corporate">
                 {{category.title}}
                 <span class="item-note">{{category.subtitle}}</span>
                 <i class="icon ion-chevron-right"></i>

@@ -1,0 +1,24 @@
+<ion-view title="Siguiendo">
+    <ion-content class="mad-page-profile" overflow-scroll="true">
+        <div ng-if="suggestions" class="card">
+            <ion-item class="item-text-wrap">
+                <p>Todavía no sigues a ningún usuario. A continuación te mostramos a los fashionistas destacados...</p>
+            </ion-item>
+        </div>
+
+        <div ng-if="suggestions && !follows.length" class="card">
+            <ion-item class="item-text-wrap">
+                <p>No sigue a ningún usuario</p>
+            </ion-item>
+        </div>
+
+        <user-card ng-repeat="user in follows" data="user" widget="follow"></user-card>
+
+        <ion-infinite-scroll
+                ng-if="page"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>

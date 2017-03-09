@@ -135,10 +135,28 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                     controller: 'PostController'
                 }
             }
+        })
+        .state('base.followers', {
+            url: 'followers/{username}',
+            views: {
+                'content': {
+                    templateUrl: 'templates/user/followers.html',
+                    controller: 'FollowersController'
+                }
+            }
+        })
+        .state('base.follows', {
+            url: 'follows/{username}',
+            views: {
+                'content': {
+                    templateUrl: 'templates/user/follows.html',
+                    controller: 'FollowsController'
+                }
+            }
         });
 
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/tabs/timeline');
-    // $ionicConfigProvider.views.maxCache(0);
+     $ionicConfigProvider.views.maxCache(0);
 
 });

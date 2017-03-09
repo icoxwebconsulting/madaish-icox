@@ -9,7 +9,7 @@ app.controller('TimelineController', function ($scope, PostService){
                Profile: {
                   UserId: card.CreatorId,
                   UserName: card.CreatorUserName,
-                  FriendlyUrlUserName: card.CreatorUserFriendlyUrlName,
+                  FriendlyUrlName: card.CreatorUserFriendlyUrlName,
                   Avatar: card.CreatorAvatar
                },
                Id: card.ContentId,

@@ -1,0 +1,19 @@
+<ion-view title="Seguidores">
+    <ion-content class="mad-page-profile" overflow-scroll="true">
+
+        <div ng-if="!followers.length" class="card">
+            <ion-item class="item-text-wrap">
+                <p>No hay seguidores</p>
+            </ion-item>
+        </div>
+
+        <user-card ng-repeat="user in followers" data="user" widget="follow"></user-card>
+
+        <ion-infinite-scroll
+                ng-if="page"
+                on-infinite="loadMore()"
+                distance="1%">
+        </ion-infinite-scroll>
+
+    </ion-content>
+</ion-view>

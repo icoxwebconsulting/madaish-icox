@@ -29,7 +29,7 @@ app.constant('GLOBAL', {
 });
 
 app.constant('API', {
-    'url': 'http://madaishapi.azurewebsites.net/api/',
+    'url': 'http://testmadaishapi.azurewebsites.net/api/',
     'image':{
         'user':{
             'path':'https://madaishuploads.blob.core.windows.net/users/'

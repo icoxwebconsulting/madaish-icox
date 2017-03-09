@@ -12,7 +12,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
                     post.Profile = {
                         UserId: post.UserId,
                         UserName: post.UserName,
-                        FriendlyUrlUserName: post.FriendlyUrlUserName,
+                        FriendlyUrlName: post.FriendlyUrlUserName,
                         Avatar: post.UserAvatar
                     };
                     if(post.ContentType == 1){
@@ -28,7 +28,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
         };
 
         $scope.profile = function () {
-            SocialService.resource.getfollowed({friendlyUserName: UserService.getUser().FriendlyUrlUserName}).$promise.then(function (data) {
+            SocialService.resource.getFollowed({friendlyUserName: UserService.getUser().FriendlyUrlUserName}).$promise.then(function (data) {
                 console.log('data', data);
             })
         };
@@ -42,7 +42,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
     }
 
 
-    if ($state.current.name == 'tabs.fashionist') {
+    if ($state.current.name == 'base.fashionist') {
 
         $scope.loadFashionist = function(){
             $scope.user = {};

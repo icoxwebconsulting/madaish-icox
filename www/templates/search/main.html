@@ -23,7 +23,7 @@
             <ion-item ng-repeat="result in results"
                       ng-show="result.count"
                       ui-sref="tabs.search-detail({type: result.type, query: query})"
-                      class="item-icon-right mad-text-corporate">
+                      class="item-icon-right text-corporate">
                 {{::result.title}}
                 <span class="item-note">Ver los {{result.count}} resultados</span>
                 <i class="icon ion-android-arrow-dropright"></i>

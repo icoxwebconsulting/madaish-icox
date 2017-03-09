@@ -4,11 +4,11 @@
 
     <div ng-click="showPost()">
         <div ng-if="data.IsFast == false">
-            <p ng-show="data.Title" style="margin-top:0px; color:#000000;" class="post-card-content">
+            <p ng-show="data.Title" class="post-card-content text-top">
                 {{::data.Title}}
             </p>
             <div ng-if="data.Image" class="item item-image" ng-class="{'video-preview':data.IsVideo}">
-                <img ng-src="{{::getImageUrl(data.Image)}}" ng-click="doubleClick($event)" width="100%" height="auto" style="display: block; margin-left: auto; margin-right: auto;">
+                <img ng-src="{{::getImageUrl(data.Image)}}" ng-click="doubleClick($event)" class="img-auto-size">
             </div>
             <div class="item item-body post-card-content" style="margin-left: 5px" ng-show="data.Title">
                 {{ data.IntroText }}
@@ -23,7 +23,7 @@
         </div>
     </div>
     <div class="item item-footer">
-        <button ng-click="like()" class="button mad-button-like button-block icon" ng-class="{
+        <button ng-click="like()" class="button button-like button-block icon" ng-class="{
                 'ion-ios-heart': data.isLiked,
                 'ion-ios-heart-outline': !data.isLiked
         }" ng-disabled="data.isLiked">&nbsp;
@@ -31,11 +31,11 @@
             <span ng-if="!data.isLiked">Me gusta</span>
         </button>
         <div ng-if="::share">
-            <p style="color:#000000;">Compartir: (QUEDA FUERA DEL MVP)</p>
+            <p class="share-text-color">Compartir: (QUEDA FUERA DEL MVP)</p>
             <div class="button-bar">
                 <button class="button button-positive button-block icon ion-social-facebook"></button>
                 <button class="button button-calm button-block icon ion-social-twitter"></button>
-                <button class="button button-stable button-block icon ion-social-pinterest" style="color:#FFFFFF;"></button>
+                <button class="button button-stable button-block icon ion-social-pinterest pinterest-color"></button>
             </div>
         </div>
     </div>

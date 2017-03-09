@@ -64,11 +64,13 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
                 }
                 $scope.subtitle = UtilsService.filter('amTimeAgo', self.post.PublishDate);
         }
-
-        if(self.currentUser.Id == self.user.UserId){
-            $scope.widget = 'ion-trash-b';
-            $scope.callback = $scope.delete;
+        if(self.user != null){
+            if(self.currentUser.Id == self.user.UserId){
+                $scope.widget = 'ion-trash-b';
+                $scope.callback = $scope.delete;
+            }
         }
+
     };
 
     $scope.init();

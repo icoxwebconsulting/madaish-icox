@@ -2,15 +2,15 @@
     <ion-content overflow-scroll="true">
         <ion-refresher
                 pulling-text="Desliza para recargar..."
-                on-refresh="reload()">
+                on-refresh="init()">
         </ion-refresher>
         <div class="card">
             <user-card data="user" widget="{{::widget}}"></user-card>
             <div class="button-bar">
-                <a ui-sref="root.view.follows({userName: user.FriendlyUrlUserName})" class="button button-dark button-small button-block button-clear">
+                <a ui-sref="base.follows({username: user.FriendlyUrlUserName})" class="button button-dark button-small button-block button-clear">
                     {{user.FollowedsCount}} Siguiendo
                 </a>
-                <a ui-sref="root.view.followers({userName: user.FriendlyUrlUserName})" class="button button-dark button-small button-block button-clear">
+                <a ui-sref="base.followers({username: user.FriendlyUrlUserName})" class="button button-dark button-small button-block button-clear">
                     {{user.FollowersCount}} Seguidores
                 </a>
             </div>
