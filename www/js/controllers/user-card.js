@@ -53,10 +53,10 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
 
         if(UserService.isLogged())
         {
-            var currentPost = new PostService.resource();
-            currentPost.UserId = user.UserId;
+            var currentUser = new SocialService.resource();
+            currentUser.UserId = user.UserId;
 
-            return currentPost.$follow(function (response) {
+            return currentUser.$follow(function (response) {
                 return response;
             }, function (error) {
                 UtilsService.hideSpinner();
