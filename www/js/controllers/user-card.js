@@ -26,7 +26,7 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
 
     $scope.showFashionist = function(){
 
-        console.info('user --> ', user);
+        console.info('user fashionist --> ', user);
 
         if(user.UserId == UserService.getUser().UserId || typeof user.FriendlyUrlUserName == "undefined")
         {
@@ -49,12 +49,14 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
 
     $scope.follow = function(){
 
+        console.info('user follow --> ', user);
+
         if(UserService.isLogged())
         {
             var currentPost = new PostService.resource();
-            currentPost.UserId = (self.post.ContentType == 1) ? 'Look' : 'Post';
+            currentPost.UserId = user.UserId;
 
-            return currentPost.$setLike(function (response) {
+            return currentPost.$follow(function (response) {
                 return response;
             }, function (error) {
                 UtilsService.hideSpinner();

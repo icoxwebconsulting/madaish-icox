@@ -20,6 +20,11 @@ app.factory('UserService', function ($resource, $q, $state, API, $localStorage, 
             method: 'POST',
             isArray: false,
             url: API.url  + 'myprofile/updateprofile'
+        }        ,
+        'changePassword': {
+            method: 'POST',
+            isArray: false,
+            url: API.url  + 'myprofile/changepassword'
         }
     });
 

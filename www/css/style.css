@@ -111,7 +111,7 @@
     border-radius: 10px;
 }
 
-.mad-button-primary, .mad-button-primary:hover {
+.button-primary, .button-primary:hover {
     color: #FFF!important;
     background-color: #A93667!important;
     border-radius: 10px;
@@ -448,50 +448,50 @@ ion-modal-view {
     text-align: left;
 }
 
-.mad-page-profile label.item-input {
+.page-profile label.item-input {
     background-color: transparent;
     border-color: #A93667;
     margin: 10px 0;
     color: #000;
 }
 
-.button-bar {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -moz-box-flex: 1;
-    -moz-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    /* width: 100%; */
-}
+/*.button-bar {*/
+    /*display: -webkit-box;*/
+    /*display: -webkit-flex;*/
+    /*display: -moz-box;*/
+    /*display: -moz-flex;*/
+    /*display: -ms-flexbox;*/
+    /*display: flex;*/
+    /*-webkit-box-flex: 1;*/
+    /*-webkit-flex: 1;*/
+    /*-moz-box-flex: 1;*/
+    /*-moz-flex: 1;*/
+    /*-ms-flex: 1;*/
+    /*flex: 1;*/
+    /*!* width: 100%; *!*/
+/*}*/
 
-.padding {
-    padding: 10px;
-}
+/*.padding {*/
+    /*padding: 10px;*/
+/*}*/
 
-.button {
-    border-color: transparent;
-    background-color: #f8f8f8;
-    color: #444;
-    position: relative;
-    display: inline-block;
-    margin: 0;
-    padding: 0 12px;
-    min-width: 52px;
-    min-height: 47px;
-    border-width: 1px;
-    border-style: solid;
-    border-radius: 4px;
-    vertical-align: top;
-    text-align: center;
-    text-overflow: ellipsis;
-    font-size: 16px;
-    line-height: 42px;
-    cursor: pointer;
-}
+/*.button {*/
+    /*border-color: transparent;*/
+    /*background-color: #f8f8f8;*/
+    /*color: #444;*/
+    /*position: relative;*/
+    /*display: inline-block;*/
+    /*margin: 0;*/
+    /*padding: 0 12px;*/
+    /*min-width: 52px;*/
+    /*min-height: 47px;*/
+    /*border-width: 1px;*/
+    /*border-style: solid;*/
+    /*border-radius: 4px;*/
+    /*vertical-align: top;*/
+    /*text-align: center;*/
+    /*text-overflow: ellipsis;*/
+    /*font-size: 16px;*/
+    /*line-height: 42px;*/
+    /*cursor: pointer;*/
+/*}*/

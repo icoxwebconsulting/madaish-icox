@@ -121,10 +121,17 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
         $scope.logout = function(){
           UserService.logout();
         };
+        $scope.$on("$ionicView.enter", function(){
+            UtilsService.setLastState('tabs.user');
+        });
     }
 
     if($state.current.name == 'base.user-setting-profile')
     {
+        $scope.$on("$ionicView.enter", function(){
+            UtilsService.setLastState('base.user-setting');
+        });
+
         var user = UserService.getUser();
         $scope.profile = {
             Avatar: UtilsService.getImageUrl(user.Avatar, API.image.user.path),
@@ -156,7 +163,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
 
             userResource.$updateProfile(function (response) {
                 UtilsService.hideSpinner();
-                $state.go('tabs.user');
+                UtilsService.showAlert('Perfil actualizado');
             }, function (error) {
                 UtilsService.hideSpinner();
                 UtilsService.showAlert('Error en conexion');
@@ -169,6 +176,9 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
 
     }
     if($state.current.name == 'base.user-setting-update'){
+        $scope.$on("$ionicView.enter", function(){
+            UtilsService.setLastState('base.user-setting');
+        });
         var user = UserService.getUser();
 
         $scope.personal = {
@@ -182,8 +192,38 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
             Sex: (user.Sex != null) ? (user.Sex ? 'Mujer' : 'Hombre') : undefined,
             ReceiveEgoMail: user.ReceiveEgoMail
         }
+    }
 
+    if($state.current.name == 'base.user-setting-password'){
 
+        $scope.$on("$ionicView.enter", function(){
+            UtilsService.setLastState('base.user-setting');
+        });
+
+        $scope.changePassword = function(){
+
+            var f = $scope.change;
+
+            if(f.password != f.repassword){
+                return UtilsService.showAlert("Las contraseñas deben ser iguales");
+            }
+
+            var userResource = new UserService.resource();
+            userResource.oldpassword = f.currentPassword;
+            userResource.NewPassword= f.password;
+            userResource.confirmPassword= f.repassword;
+
+            userResource.$changePassword(function (response) {
+                UtilsService.hideSpinner();
+                UtilsService.showAlert('Contraseña actualizada');
+                $scope.change = {};
+            }, function (error) {
+                UtilsService.hideSpinner();
+                UtilsService.showAlert('Error en conexion');
+                return false;
+            });
+
+        };
     }
 
 });
