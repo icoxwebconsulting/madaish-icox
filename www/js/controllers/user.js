@@ -168,5 +168,22 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
 
 
     }
+    if($state.current.name == 'base.user-setting-update'){
+        var user = UserService.getUser();
+
+        $scope.personal = {
+            Name: user.Name,
+            Surname: user.Surname,
+            Country: user.Country,
+            City: user.City,
+            PostalCode: user.PostalCode,
+            Phone: user.Phone,
+            BornDate: (user.BornDate != null) ? new Date(user.BornDate) : undefined,
+            Sex: (user.Sex != null) ? (user.Sex ? 'Mujer' : 'Hombre') : undefined,
+            ReceiveEgoMail: user.ReceiveEgoMail
+        }
+
+
+    }
 
 });

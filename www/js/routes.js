@@ -176,6 +176,15 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
+        .state('base.user-setting-update', {
+            url: 'user/setting/update',
+            views: {
+                'content': {
+                    templateUrl: 'templates/user/setting/update.html',
+                    controller: 'UserController'
+                }
+            }
+        })
         .state('base.fashionist', {
             url: 'user/fashionist/{username}',
             views: {
