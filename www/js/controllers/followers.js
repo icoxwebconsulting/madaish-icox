@@ -6,8 +6,12 @@ app.controller('FollowersController', function ($scope, GLOBAL, SocialService, $
         var username = $stateParams.username;
 
         SocialService.resource.getFollowers({friendlyUserName: username, page: $scope.page}).$promise.then(function (data) {
-
-            $scope.followers = $scope.followers.concat(data.Follows);
+            var followers = data.Follows;
+            followers.forEach(function (follow) {
+                follow.UserId = follow.Id;
+                follow.FriendlyUrlUserName = follow.FriendlyUrlName;
+                $scope.followers.push(follow);
+            });
             UtilsService.hideSpinner();
         }).finally(function(){
             $scope.$broadcast('scroll.infiniteScrollComplete');

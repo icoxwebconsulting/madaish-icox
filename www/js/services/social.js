@@ -1,14 +1,28 @@
-app.factory('SocialService', function ($resource, API, $localStorage) {
+app.factory('SocialService', function ($resource, API, $localStorage, UserService) {
 
     var resource = $resource(API.url, {}, {
+        'like': {
+            method: 'POST',
+            isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url  + 'Likes/Like'
+        },
+        'disLike': {
+            method: 'POST',
+            isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url  + 'Likes/RemoveLike'
+        },
         'follow': {
             method: 'POST',
             isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
             url: API.url  + 'social/follow'
         },
         'unfollow': {
             method: 'POST',
             isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
             url: API.url  + 'social/unfollow'
         },
         'getFollowed': {

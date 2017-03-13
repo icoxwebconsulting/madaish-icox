@@ -16,15 +16,15 @@ app.directive('parseLinks', function($timeout, $state, UtilsService){
             if(link.type == 'post'){
                 $state.go('base.post', {
                     content: 'post',
-                    userName: link.username,
-                    postName: link.postname
+                    username: link.username,
+                    postname: link.postname
                 });
             }
             if(link.type == 'look'){
                 $state.go('base.post', {
                     content: 'look',
-                    userName: link.username,
-                    postName: link.lookname
+                    username: link.username,
+                    postname: link.lookname
                 });
             }
             if(link.type == 'unknown'){

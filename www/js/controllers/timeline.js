@@ -1,4 +1,4 @@
-app.controller('TimelineController', function ($scope, PostService){
+app.controller('TimelineController', function ($scope, $state, PostService, UtilsService){
 
    $scope.loadPosts = function(){
       PostService.resource.getTimeline({page:$scope.page}).$promise.then(function(data){
@@ -32,6 +32,9 @@ app.controller('TimelineController', function ($scope, PostService){
 
       }).finally(function(){
          $scope.$broadcast('scroll.infiniteScrollComplete');
+      }).catch(function(error) {
+         $scope.page = null;
+         $state.go('tabs.login');
       });
    };
 
@@ -47,5 +50,9 @@ app.controller('TimelineController', function ($scope, PostService){
       $scope.page++;
       $scope.loadPosts();
    };
+
+   $scope.$on("$ionicView.enter", function(){
+      UtilsService.setLastState('tabs.timeline');
+   });
 
 });

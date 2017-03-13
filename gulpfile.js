@@ -61,11 +61,11 @@ gulp.task('uglify', function (done) {
 });
 
 
-// gulp.task('watch', ['sass'], function() {
-//   gulp.watch(paths.sass, ['sass']);
-//   gulp.watch(paths.css, ['css']);
-//   gulp.watch(paths.js, ['uglify']);
-// });
+gulp.task('watch', ['sass'], function() {
+  gulp.watch(paths.sass, ['sass']);
+  gulp.watch(paths.css, ['css']);
+  gulp.watch(paths.js, ['uglify']);
+});
 
 gulp.task('install', ['git-check'], function() {
   return bower.commands.install()

@@ -2,9 +2,13 @@ app.service('UtilsService', function($window, $q, $timeout, $ionicLoading, $ioni
 
     var service = this;
 
-    this.showSpinner = function(){
+    this.showSpinner = function(message){
+
+        if(typeof message === "undefined")
+            message = 'Cargando...';
+
         $ionicLoading.show({
-            template: 'Cargando...'
+            template: message
         });
     };
 
@@ -92,31 +96,19 @@ app.service('UtilsService', function($window, $q, $timeout, $ionicLoading, $ioni
     };
 
     this.goBack = function(){
-
-        service.showSpinner();
-
-        if($state.current.name == 'root.view.followers' || $state.current.name == 'root.view.follows')
-        {
+        if(service.lastState)
             $state.go(service.lastState);
-            service.hideSpinner();
-        }else{
-            if($ionicHistory.backView()){
-                $ionicHistory.goBack();
-            }else{
-                $state.go('root.dispatcher');
-            }
-            service.hideSpinner();
-        }
-
+        else
+            service.restart();
     };
 
     this.lastState = null;
 
-    this.setLastView = function(state){
+    this.setLastState = function(state){
         service.lastState = state;
     };
 
     this.restart = function(){
-        $state.go('root.tabs.timeline');
+        $state.go('tabs.timeline');
     };
 });

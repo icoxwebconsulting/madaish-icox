@@ -21,7 +21,6 @@ app.run(function ($rootScope, $ionicPlatform, $state) {
         }
 
         $rootScope.$on('cloud:push:notification', function (event, data) {
-            console.info('notification', data);
             var notification = data.message;
 
             if (typeof notification.payload != "undefined") {
@@ -32,13 +31,13 @@ app.run(function ($rootScope, $ionicPlatform, $state) {
                         case 0:
                             $state.go('base.post', {
                                 content: (payload.post_type == 1) ? 'post' : 'look',
-                                userName: payload.username,
-                                postName: payload.post_name
+                                username: payload.username,
+                                postname: payload.post_name
                             });
                             break;
                         case 1:
                             $state.go('base.fashionist', {
-                                userName: payload.username
+                                username: payload.username
                             });
                             break;
                     }

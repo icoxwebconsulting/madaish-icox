@@ -1,4 +1,4 @@
-app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL, UtilsService, UserService, PostService, $ionicPopup) {
+app.controller('PostCardController', function ($scope, $state, $timeout, $ionicPopup, UtilsService, UserService, PostService, SocialService  ) {
 
 
     $scope.delete = function () {
@@ -92,8 +92,8 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
 
             $state.go('base.post', {
                 content: (self.post.ContentType == 1) ? 'look' : 'post',
-                userName: self.post.Profile.FriendlyUrlUserName,
-                postName: self.post.FriendlyUrlTitle
+                username: self.post.Profile.FriendlyUrlUserName,
+                postname: self.post.FriendlyUrlTitle
             });
         }, delay);
     };
@@ -109,45 +109,47 @@ app.controller('PostCardController', function ($scope, $state, $timeout, GLOBAL,
     };
 
     $scope.like = function(){
-        if($scope.data.isLiked) return;
+
 
         if(UserService.isLogged())
         {
-            var currentPost = new PostService.resource();
-            currentPost.type = (self.post.ContentType == 1) ? 'Look' : 'Post';
-            currentPost.id = self.post.Id;
+            var currentPost = new SocialService.resource();
+            currentPost.itemId = (self.post.ContentType == 1) ? 'Look' : 'Post';
+            currentPost.type = self.post.Id;
 
-            return currentPost.$setLike(function (response) {
-                return response;
-            }, function (error) {
-                UtilsService.hideSpinner();
-                UtilsService.showAlert('Error en conexion');
-                return false;
-            });
+            if($scope.data.isLiked)
+            {
+                return currentPost.$disLike(function (response) {
+                    $scope.data.isLiked = false;
+                    if(data.LikesCount > 1)
+                        data.LikesCount = data.LikesCount - 1;
+                    else
+                        data.LikesCount = 0;
+
+                    return response;
+                }, function (error) {
+                    UtilsService.hideSpinner();
+                    UtilsService.showAlert('Error en conexion');
+                    return false;
+                });
+            }else{
+                return currentPost.$like(function (response) {
+                    $scope.data.isLiked = true;
+                    data.LikesCount = data.LikesCount + 1;
+                    return response;
+                }, function (error) {
+                    UtilsService.hideSpinner();
+                    UtilsService.showAlert('Error en conexion');
+                    return false;
+                });
+            }
+
+
+
         }else{
-            UtilsService.showAlert('Por favor inicie sesion para dar me gusta');
+            UtilsService.showAlert('Debe estar logeado.');
         }
 
-
     };
-
-
-
-
-
-
-
-
-
-
-    // userService.checkLike(post.Id).then(function(liked){
-    //     if(!liked) return $q.reject();
-    //     $scope.data.isLiked = true;
-    // }).catch(function(){
-    //     $scope.$root.$on('liked_' + post.Id, function(){
-    //         $scope.data.LikesCount++;
-    //         $scope.data.isLiked = true;
-    //     });
-    // });
 
 });

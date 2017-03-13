@@ -6,6 +6,11 @@ app.factory('AuthService', function ($resource, API, $localStorage) {
             isArray: false,
             url: API.url  + 'Account/login'
         },
+        'recoverPassword': {
+            method: 'POST',
+            isArray: false,
+            url: API.url  + 'Account/recoverpassword'
+        },
         'facebookSignIn': {
             method: 'GET',
             isArray: false,

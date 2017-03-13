@@ -1,28 +1,6 @@
 app.controller('FollowsController', function ($scope, GLOBAL, SocialService, $state, $stateParams, UserService, UtilsService) {
 
-    $scope.loadFollows = function(){
-        UtilsService.showSpinner();
-        var username = $stateParams.username;
-
-        SocialService.resource.getFollowed({friendlyUserName: username, page: $scope.page}).$promise.then(function (data) {
-
-            if(data.Follows.length > 0){
-                $scope.suggestions = false;
-                $scope.follows = $scope.follows.concat(data.Follows);
-            }else{
-                $scope.page = null;
-                $scope.suggestions = true;
-                self.loadSuggetions();
-            }
-            UtilsService.hideSpinner();
-        }).finally(function(){
-            $scope.$broadcast('scroll.infiniteScrollComplete');
-            UtilsService.hideSpinner();
-        });
-
-    };
-
-    self.loadSuggetions = function () {
+    self.loadSuggestions = function () {
         $scope.follows = [];
         SocialService.resource.postFollowSuggestions().$promise.then(function (data) {
 
@@ -31,24 +9,64 @@ app.controller('FollowsController', function ($scope, GLOBAL, SocialService, $st
                 follow.FriendlyUrlUserName = follow.FriendlyUrlName;
                 $scope.follows.push(follow);
             });
-            console.log('follows',$scope.follows);
-
         });
 
     };
 
-    $scope.init = function(){
-        $scope.follows = [];
-        $scope.page = 1;
-        $scope.loadFollows();
-    };
+    if ($state.current.name == 'base.follows') {
+        $scope.loadFollows = function(){
+            UtilsService.showSpinner();
+            var username = $stateParams.username;
 
-    $scope.init();
+            SocialService.resource.getFollowed({friendlyUserName: username, page: $scope.page}).$promise.then(function (data) {
 
-    $scope.loadMore = function(){
-        $scope.page++;
-        $scope.loadFollows();
-    };
+                if(data.Follows.length > 0){
+                    $scope.suggestions = false;
+                    var follows = data.Follows;
+                    follows.forEach(function (follow) {
+                        follow.UserId = follow.Id;
+                        follow.FriendlyUrlUserName = follow.FriendlyUrlName;
+                        $scope.follows.push(follow);
+                    });
+                }else{
+
+                    if($scope.page == 1)
+                    {
+                        $scope.suggestions = true;
+                        self.loadSuggestions();
+                    }
+
+                    $scope.page = null;
+
+                }
+                UtilsService.hideSpinner();
+            }).finally(function(){
+                $scope.$broadcast('scroll.infiniteScrollComplete');
+                UtilsService.hideSpinner();
+            });
+
+        };
+
+        $scope.init = function(){
+            $scope.follows = [];
+            $scope.page = 1;
+            $scope.loadFollows();
+        };
+
+        $scope.init();
+
+        $scope.loadMore = function(){
+            $scope.page++;
+            $scope.loadFollows();
+        };
+    }
+
+    if ($state.current.name == 'base.follows-suggestions') {
+        $scope.$on("$ionicView.enter", function(){
+            self.loadSuggestions();
+            $scope.page = null;
+        });
+    }
 
 
 });

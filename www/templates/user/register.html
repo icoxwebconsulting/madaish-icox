@@ -1,0 +1,20 @@
+<ion-view title="Registro">
+    <ion-content class="page-landing"  overflow-scroll="true">
+        <form class="list">
+            <label class="item item-input">
+                <input ng-model="register.username" type="text" placeholder="Nombre de usuario">
+            </label>
+            <label class="item item-input">
+                <input ng-model="register.email" type="email" placeholder="Email">
+            </label>
+            <label class="item item-input">
+                <input ng-model="register.password" type="password" placeholder="Introduce una contraseña">
+            </label>
+            <label class="item item-input">
+                <input ng-model="register.confirm" type="password" placeholder="Repite la contraseña">
+            </label>
+            <button ng-click="signUp()" class="button mad-button-primary button-block" ng-disabled="!register.valid">¡Quiero unirme a Madaísh!
+            </button>
+        </form>
+    </ion-content>
+</ion-view>

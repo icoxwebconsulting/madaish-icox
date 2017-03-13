@@ -1,0 +1,36 @@
+<ion-view title="Habla de moda">
+    <ion-content class="page-publish" overflow-scroll="true">
+        <div class="button-bar">
+            <button ng-click="publishPost()" class="button button-primary button-block margintop" style="border-color: white">
+                Publicar
+            </button>
+        </div>
+        <div ng-if="!form.picture">
+            <img ng-click="setPicture('gallery')" src="img/upload_image.png" style="width: 49%">
+            <img ng-click="searchVideo()" src="img/upload_video.png" style="width: 49%; float: right">
+        </div>
+
+        <div ng-if="form.picture">
+            <img ng-src="{{form.picture}}" width="100%">
+            <a ng-click="removePicture()" class="button mad-button-red button-block icon-left ion-trash-b shadow">
+                Quitar portada
+            </a>
+        </div>
+        <ion-item class="item-select">
+            <select ng-model="form.category" class="inline-select" ng-class="{'select-placeholder': !form.category}">
+                <option value="" selected>Selecciona categoría</option>
+                <option value="Moda">Moda</option>
+                <option value="Belleza">Belleza</option>
+                <option value="Lifestyle">Lifestyle</option>
+            </select>
+        </ion-item>
+        <ion-item>
+            <input ng-model="form.title" type="text" style="width: 100%" placeholder="Título">
+        </ion-item>
+        <ion-item>
+            <textarea ng-model="form.text" rows="10" style="width: 100%; resize: none;"
+                      placeholder="Aquí puedes escribir lo que quieras, incluso usar #hashtags">
+            </textarea>
+        </ion-item>
+    </ion-content>
+</ion-view>

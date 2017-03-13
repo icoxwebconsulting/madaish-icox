@@ -1,19 +1,5 @@
 app.controller('LoginController', function ($scope, $state, AuthService, UserService, UtilsService) {
 
-    $scope.init = function(){
-        $scope.choice = '';
-    };
-
-    $scope.init();
-
-
-    // $scope.$on('$ionicView.beforeEnter', function (event, viewData) {
-    //     console.info('view', viewData);
-    //     viewData.showNavBar = true;
-    //     // viewData.enableBack = true;
-    // });
-
-
     if ($state.current.name == 'tabs.login-email') {
         $scope.login = {};
         $scope.login.valid = false;
@@ -27,55 +13,127 @@ app.controller('LoginController', function ($scope, $state, AuthService, UserSer
         $scope.emailLogin = function(){
             var user = new AuthService.resource();
             user.username = $scope.login.email;
-            user.password = $scope.login.password;
 
-            UtilsService.showSpinner();
-            user.$login(function (response) {
-                if(response.Success){
+            if($scope.login.forgot){
+                if(!/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/.test($scope.login.email)){
+                    $ionicLoading.hide();
+                    return UtilsService.showAlert("Introduzca la dirección de email con la que realizó el registro");
+                }else{
+                    user.$recoverPassword(function (response) {
+                        UtilsService.hideSpinner();
+                        UtilsService.showAlert(response);
+                        $state.go('base.login');
+                    },function (error) {
+                        UtilsService.hideSpinner();
+                        UtilsService.showAlert('Error en conexion');
+                        return false;
+                    });
+                }
+            }else{
+                UtilsService.showSpinner();
+                user.password = $scope.login.password;
+                user.$login(function (response) {
+                    if(response.Success){
+                        UtilsService.hideSpinner();
+                        response.CurrentUser.FriendlyUrlUserName = response.CurrentUser.FriendlyUrlName;
+                        response.CurrentUser.UserId = response.CurrentUser.Id;
+                        response.CurrentUser.Token = response.Token;
+                        UserService.setUser(response.CurrentUser);
+                        $state.go('tabs.timeline');
+                    }else{
+                        UtilsService.hideSpinner();
+                        UtilsService.showAlert('Datos invalidos');
+                    }
+                }, function (error) {
                     UtilsService.hideSpinner();
+                    UtilsService.showAlert('Error en conexion');
+                    return false;
+                });
+            }
+
+        };
+    }
+
+    if ($state.current.name == 'tabs.login') {
+
+        $scope.$on("$ionicView.enter", function(){
+            UtilsService.setLastState('tabs.login');
+        });
+
+        self.loginFb = function(data){
+            UtilsService.showSpinner();
+            var user = new AuthService.resource();
+            user.fbId = data.id;
+            user.$facebookSignIn(function (response) {
+
+                if(response.Success)
+                {
                     response.CurrentUser.FriendlyUrlUserName = response.CurrentUser.FriendlyUrlName;
                     response.CurrentUser.UserId = response.CurrentUser.Id;
                     response.CurrentUser.Token = response.Token;
-                    console.info('response',response);
+                    UtilsService.hideSpinner();
                     UserService.setUser(response.CurrentUser);
                     $state.go('tabs.timeline');
                 }else{
-                    UtilsService.hideSpinner();
-                    UtilsService.showAlert('Datos invalidos');
+                    var fbPicture = data.picture.data.is_silhouette ? null : 'https://graph.facebook.com/' + fbData.id + '/picture?width=250';
+                    var user = new UserService.resource();
+                    user.username = data.name;
+                    user.email = data.email;
+                    user.password = '';
+                    user.FbId = data.id;
+                    user.FbImage = fbPicture;
+
+                    user.$new(function (response) {
+                        if(response.Success){
+                            var auth = new AuthService.resource();
+                            auth.username = $scope.register.username;
+                            auth.password = $scope.register.password;
+                            auth.$login(function (response) {
+                                if(response.Success){
+                                    UtilsService.hideSpinner();
+                                    response.CurrentUser.FriendlyUrlUserName = response.CurrentUser.FriendlyUrlName;
+                                    response.CurrentUser.UserId = response.CurrentUser.Id;
+                                    response.CurrentUser.Token = response.Token;
+                                    UserService.setUser(response.CurrentUser);
+                                    $state.go('tabs.timeline');
+                                }else{
+                                    UtilsService.hideSpinner();
+                                    UtilsService.showAlert('Datos invalidos');
+                                }
+                            }, function (error) {
+                                UtilsService.hideSpinner();
+                                UtilsService.showAlert('Error en conexion');
+                                return false;
+                            });
+                        }else{
+                            UtilsService.hideSpinner();
+                            UtilsService.showAlert(response.error);
+                        }
+                    }, function (error) {
+                        UtilsService.hideSpinner();
+                        UtilsService.showAlert('Error en conexion');
+                        return false;
+                    });
                 }
+
+
             }, function (error) {
                 UtilsService.hideSpinner();
                 UtilsService.showAlert('Error en conexion');
                 return false;
             });
         };
-    }
-
-    if ($state.current.name == 'tabs.login') {
 
         var fbLoginSuccess = function (response) {
             if (!response.authResponse) {
                 fbLoginError("Cannot find the authResponse");
                 return;
             }
-
             var authResponse = response.authResponse;
 
             getFacebookProfileInfo(authResponse)
                 .then(function (profileInfo) {
-                    apiService.loginFromFB(profileInfo).then(function (response) {
-                        console.info('not connected', response);
-                        $state.go('root.tabs.profile');
-                        $timeout(function () {
-                            $ionicLoading.hide();
-                        }, 3000);
-                        return userService.setCurrentUser(response);
-
-                    }).catch(function (error) {
-                        utilsService.hideSpinner();
-                        $scope.loading = false;
-                        $ionicLoading.hide();
-                    });
+                    self.loginFb(profileInfo);
                 }, function (fail) {
                     // Fail get profile info
                     console.log('profile info fail', fail);
@@ -112,17 +170,7 @@ app.controller('LoginController', function ($scope, $state, AuthService, UserSer
 
                     getFacebookProfileInfo(success.authResponse)
                         .then(function (profileInfo) {
-                            apiService.loginFromFB(profileInfo).then(function (response) {
-                                $state.go('root.tabs.profile');
-                                $timeout(function () {
-                                    $ionicLoading.hide();
-                                }, 3000);
-                                return userService.setCurrentUser(response);
-                            }).catch(function (error) {
-                                utilsService.hideSpinner();
-                                $scope.loading = false;
-                                $ionicLoading.hide();
-                            });
+                            self.loginFb(profileInfo);
                         }, function (fail) {
                             // Fail get profile info
                             console.log('profile info fail', fail);
@@ -136,6 +184,10 @@ app.controller('LoginController', function ($scope, $state, AuthService, UserSer
                 }
             });
         };
+
+        $scope.guestLogin = function(){
+            $state.go('tabs.explorer');
+        }
     }
 
 

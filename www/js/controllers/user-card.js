@@ -4,12 +4,9 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
 
     $scope.init = function(){
 
-        $scope.followsRef = 100; //UserService.getFollowsReference();
-
         if($scope.widget == 'follow' && user.FriendlyUrlUserName == UserService.getUser().FriendlyUrlUserName){
             $scope.widget = '';
         }
-        console.info('widget', $scope.widget);
         $scope.label = '@';
 
         switch($scope.widget){
@@ -29,21 +26,44 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
 
     $scope.showFashionist = function(){
 
-        return $state.go('base.fashionist', {
-            userName: user.FriendlyUrlUserName
-        });
+        console.info('user --> ', user);
+
+        if(user.UserId == UserService.getUser().UserId || typeof user.FriendlyUrlUserName == "undefined")
+        {
+            $state.go('tabs.user');
+        }else{
+            var url = null;
+
+            if(typeof user.FriendlyUrlUserName == "undefined")
+                url = user.FriendlyUrlName;
+            else
+                url = user.FriendlyUrlUserName;
+
+            return $state.go('base.fashionist', {
+                username: url
+            });
+        }
+
+
     };
 
     $scope.follow = function(){
 
-        return userService.askForLogin().then(function(currentUser){
-            var follow = !$scope.followsRef[user.FriendlyUrlUserName];
-            return apiService.follow(user.UserId, follow).then(function(){
-                return userService.setFollow(user.FriendlyUrlUserName, follow);
-            }).then(function(){
-                apiService.getUser(currentUser.FriendlyUrlUserName, true);
+        if(UserService.isLogged())
+        {
+            var currentPost = new PostService.resource();
+            currentPost.UserId = (self.post.ContentType == 1) ? 'Look' : 'Post';
+
+            return currentPost.$setLike(function (response) {
+                return response;
+            }, function (error) {
+                UtilsService.hideSpinner();
+                UtilsService.showAlert('Error en conexion');
+                return false;
             });
-        });
+        }else{
+            UtilsService.showAlert('Debe estar logeado.');
+        }
     };
 
     $scope.settings = function(){

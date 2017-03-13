@@ -104,8 +104,8 @@ app.controller('SearchController', function ($scope, $state, $stateParams, PostS
             }else{
                 $state.go('base.post', {
                     content: (type == 0) ? 'post' : 'look',
-                    userName: post.FriendlyUrlUserName,
-                    postName: post.FriendlyUrlTitle
+                    username: post.FriendlyUrlUserName,
+                    postname: post.FriendlyUrlTitle
                 });
             }
         };

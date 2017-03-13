@@ -10,7 +10,56 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
         .state('base', {
             url: '/',
             abstract: true,
-            templateUrl: 'templates/base.html'
+            templateUrl: 'templates/base.html',
+            controller: 'BaseController'
+        })
+        .state('base.register', {
+            url: 'register',
+            views: {
+                'content': {
+                    templateUrl: 'templates/user/register.html',
+                    controller: 'UserController',
+                    resolve: {
+                        auth: function(UserService, $q) {
+                            if (UserService.isLogged()) {
+                                return $q.reject("logged");
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .state('base.publish-post', {
+            url: 'post/publish',
+            views: {
+                'content': {
+                    templateUrl: 'templates/post/publish/post.html',
+                    controller: 'PostController',
+                    resolve: {
+                        auth: function(UserService, $q) {
+                            if (!UserService.isLogged()) {
+                                return $q.reject("not-logged");
+                            }
+                        }
+                    }
+                }
+            }
+        })
+        .state('base.publish-look', {
+            url: 'look/publish',
+            views: {
+                'content': {
+                    templateUrl: 'templates/post/publish/look.html',
+                    controller: 'PostController',
+                    resolve: {
+                        auth: function(UserService, $q) {
+                            if (!UserService.isLogged()) {
+                                return $q.reject("not-logged");
+                            }
+                        }
+                    }
+                }
+            }
         })
         .state('tabs', {
             url: '/tabs/',
@@ -118,6 +167,15 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
                 }
             }
         })
+        .state('base.user-setting-profile', {
+            url: 'user/setting/profile',
+            views: {
+                'content': {
+                    templateUrl: 'templates/user/setting/profile.html',
+                    controller: 'UserController'
+                }
+            }
+        })
         .state('base.fashionist', {
             url: 'user/fashionist/{username}',
             views: {
@@ -128,7 +186,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             }
         })
         .state('base.post', {
-            url: 'post/{content}/{userName}/{postName}',
+            url: 'post/{content}/{username}/{postname}',
             views: {
                 'content': {
                     templateUrl: 'templates/post/detail.html',
@@ -137,7 +195,7 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             }
         })
         .state('base.followers', {
-            url: 'followers/{username}',
+            url: 'user/followers/{username}',
             views: {
                 'content': {
                     templateUrl: 'templates/user/followers.html',
@@ -146,7 +204,16 @@ app.config(function($stateProvider, $urlRouterProvider, $ionicConfigProvider) {
             }
         })
         .state('base.follows', {
-            url: 'follows/{username}',
+            url: 'user/follows/{username}',
+            views: {
+                'content': {
+                    templateUrl: 'templates/user/follows.html',
+                    controller: 'FollowsController'
+                }
+            }
+        })
+        .state('base.follows-suggestions', {
+            url: 'user/follows-suggestions',
             views: {
                 'content': {
                     templateUrl: 'templates/user/follows.html',

@@ -1,6 +1,11 @@
-app.factory('UserService', function ($resource, API, $localStorage, $ionicPush, NotificationService) {
+app.factory('UserService', function ($resource, $q, $state, API, $localStorage, $ionicPush, NotificationService, UtilsService) {
 
     var resource = $resource(API.url, {}, {
+        'new': {
+            method: 'POST',
+            isArray: false,
+            url: API.url  + 'Account/register'
+        },
         'getExplorer': {
             method: 'GET',
             isArray: false,
@@ -10,6 +15,11 @@ app.factory('UserService', function ($resource, API, $localStorage, $ionicPush, 
             method: 'GET',
             isArray: false,
             url: API.url  + 'fashionists/getuserprofile'
+        },
+        'updateProfile': {
+            method: 'POST',
+            isArray: false,
+            url: API.url  + 'myprofile/updateprofile'
         }
     });
 
@@ -39,13 +49,12 @@ app.factory('UserService', function ($resource, API, $localStorage, $ionicPush, 
     }
 
     function logout(){
-        var data = {};
-        data.access_token = $localStorage.user.access_token;
-        data.device_token = $localStorage.device_token;
-        data.os = $localStorage.os;
-        unRegisterDevice(data).then(function(response){
+        UtilsService.showSpinner();
+        unRegisterDevice($localStorage.user.Id).then(function(response){
             $localStorage.user = {};
             $state.go("tabs.login");
+        }).finally(function(){
+            UtilsService.hideSpinner();
         });
     }
 
@@ -54,10 +63,10 @@ app.factory('UserService', function ($resource, API, $localStorage, $ionicPush, 
         return pattern.test(email);
     }
 
-    function unRegisterDevice(data) {
+    function unRegisterDevice(UserId) {
         var deferred = $q.defer();
-        var deviceResource = new DeviceService.resource();
-        deviceResource.$unRegister({access_token: data.access_token, device_token: data.device_token }, function (response){
+        var notification = new NotificationService.resource();
+        notification.$deleteDevice({UserId: UserId}, function (response){
             deferred.resolve(response);
         }, function (error) {
             deferred.resolve(error);

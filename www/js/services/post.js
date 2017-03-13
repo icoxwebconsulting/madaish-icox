@@ -7,10 +7,34 @@ app.factory('PostService', function ($resource, API, UserService) {
             isArray: false,
             url: API.url + 'posts/getpost'
         },
+        'new':{
+            method: 'POST',
+            isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url + 'mypost/create'
+        },
+        'newFast':{
+            method: 'POST',
+            isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url + 'mypost/createFast'
+        },
         'getLook':{
             method: 'GET',
             isArray: false,
             url: API.url + 'looks/getlook'
+        },
+        'newLook':{
+            method: 'POST',
+            isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url + 'mylook/create'
+        },
+        'newLookFast':{
+            method: 'POST',
+            isArray: false,
+            headers: { 'token': UserService.getUser().Token || null },
+            url: API.url + 'mylook/createFast'
         },
         'getTimeline': {
             method: 'GET',

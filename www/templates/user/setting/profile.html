@@ -1,0 +1,35 @@
+<ion-view title="Perfil público">
+    <ion-content class="page-profile" overflow-scroll="true">
+
+        <div class="card">
+            <div class="item item-image" ng-click="setPicture()">
+                <img ng-src="{{profile.Avatar}}">
+            </div>
+        </div>
+
+        <label class="item item-input item-stacked-label">
+            <span class="input-label">Descripción</span>
+            <textarea ng-model="profile.Description" rows="4" style="width: 100%; resize: none;"
+                      placeholder="Escribe una breve descripción sobre ti">
+            </textarea>
+        </label>
+
+        <div class="item item-toggle">
+            <label>
+                Recibir comunicados por email
+                <label class="toggle">
+                    <input ng-model="profile.ReceiveEgoMail" type="checkbox">
+                    <div class="track">
+                        <div class="handle"></div>
+                    </div>
+                </label>
+            </label>
+        </div>
+
+        <div class="button-bar">
+            <button ng-click="update(profile)" class="button mad-button-primary button-block margintop" style="border-color: white">
+                Guardar cambios
+            </button>
+        </div>
+    </ion-content>
+</ion-view>

@@ -1,28 +1,90 @@
-app.controller('UserController', function ($scope, $state, $stateParams, AuthService, UserService, SocialService, UtilsService, $rootScope) {
+app.controller('UserController', function ($scope, $state, $stateParams, AuthService, UserService, SocialService, UtilsService, $rootScope, API) {
+
+    if($state.current.name == 'base.register')
+    {
+        $scope.register = {};
+        $scope.$watch('register', function(){
+            var f = $scope.register;
+            f.valid = f.username && f.email && f.password;
+        }, true);
+
+        $scope.signUp = function(){
+
+            if($scope.register.password != $scope.register.confirm){
+                return UtilsService.showAlert("La contraseña no coinciden");
+            }
+
+            var user = new UserService.resource();
+            user.username = $scope.register.username;
+            user.email = $scope.register.email;
+            user.password = $scope.register.password;
+            user.FbId = null;
+            user.FbImage = null;
+
+            UtilsService.showSpinner();
+            user.$new(function (response) {
+                if(response.Success){
+                    var auth = new AuthService.resource();
+                    auth.username = $scope.register.username;
+                    auth.password = $scope.register.password;
+                    auth.$login(function (response) {
+                        if(response.Success){
+                            UtilsService.hideSpinner();
+                            response.CurrentUser.FriendlyUrlUserName = response.CurrentUser.FriendlyUrlName;
+                            response.CurrentUser.UserId = response.CurrentUser.Id;
+                            response.CurrentUser.Token = response.Token;
+                            UserService.setUser(response.CurrentUser);
+                            $state.go('tabs.timeline');
+                        }else{
+                            UtilsService.hideSpinner();
+                            UtilsService.showAlert('Datos invalidos');
+                        }
+                    }, function (error) {
+                        UtilsService.hideSpinner();
+                        UtilsService.showAlert('Error en conexion');
+                        return false;
+                    });
+                }else{
+                    UtilsService.hideSpinner();
+                    UtilsService.showAlert(response.error);
+                }
+            }, function (error) {
+                UtilsService.hideSpinner();
+                UtilsService.showAlert('Error en conexion');
+                return false;
+            });
+        };
+    }
+
+
+    self.loadUser = function(username){
+        UserService.resource.getFashionist({user: username}).$promise.then(function(data){
+            $scope.user = angular.extend({}, data.Profile, data.extraInfo);
+
+            data.Results.forEach(function(post){
+                post.Profile = {
+                    UserId: post.UserId,
+                    UserName: post.UserName,
+                    FriendlyUrlName: post.FriendlyUrlUserName,
+                    Avatar: post.UserAvatar
+                };
+                if(post.ContentType == 1){
+                    post.FriendlyUrlTitle = post.FriendlyUrlLookTitle;
+                }
+                post.Type = post.Category.Name;
+                $scope.posts.push(post);
+            });
+
+        });
+    };
+
 
     if ($state.current.name == 'tabs.user') {
 
         $scope.init = function(){
             $scope.user = [];
             $scope.posts = [];
-            UserService.resource.getFashionist({user: UserService.getUser().Name}).$promise.then(function(data){
-                $scope.user = angular.extend({}, data.Profile, data.extraInfo);
-
-                data.Results.forEach(function(post){
-                    post.Profile = {
-                        UserId: post.UserId,
-                        UserName: post.UserName,
-                        FriendlyUrlName: post.FriendlyUrlUserName,
-                        Avatar: post.UserAvatar
-                    };
-                    if(post.ContentType == 1){
-                        post.FriendlyUrlTitle = post.FriendlyUrlLookTitle;
-                    }
-                    post.Type = post.Category.Name;
-                    $scope.posts.push(post);
-                });
-
-            });
+            self.loadUser(UserService.getUser().Name);
             $scope.widget = 'settings';
 
         };
@@ -36,7 +98,6 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
         $scope.init();
 
         $rootScope.$on('post:refresh', function(event, args) {
-            console.log('$rootScope.$on | post:refresh');
             $scope.init();
         });
     }
@@ -44,16 +105,68 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
 
     if ($state.current.name == 'base.fashionist') {
 
-        $scope.loadFashionist = function(){
-            $scope.user = {};
+        $scope.loadFashionist = function() {
+            $scope.user = [];
+            $scope.posts = [];
             $scope.widget = 'follow';
             var username = $stateParams.username;
-            UserService.resource.getFashionist({user: username}).$promise.then(function(data){
-                $scope.user = angular.extend({}, data.Profile, data.extraInfo)
-            });
+            self.loadUser(username);
         };
 
         $scope.loadFashionist();
+    }
+
+    if($state.current.name == 'base.user-setting')
+    {
+        $scope.logout = function(){
+          UserService.logout();
+        };
+    }
+
+    if($state.current.name == 'base.user-setting-profile')
+    {
+        var user = UserService.getUser();
+        $scope.profile = {
+            Avatar: UtilsService.getImageUrl(user.Avatar, API.image.user.path),
+            Description: user.Description,
+            ReceiveEgoMail: user.ReceiveEgoMail
+        };
+
+        $scope.update = function(params){
+
+            var userResource = new UserService.resource();
+
+            for(var p in params){
+                var value = params[p];
+
+                if(p == 'BornDate'){
+                    value = value ? UtilsService.filter('date', value, 'yyyy/MM/dd') : undefined;
+                }
+                if(p == 'Avatar'){
+                    value = value.replace(/data\:.+\;base64\,/, '');
+                }
+
+                if(value === undefined) continue;
+                if(value === false) value = 'false';
+                if(value === null || value === '') value = 'null';
+
+                userResource[p] = value;
+            }
+
+
+            userResource.$updateProfile(function (response) {
+                UtilsService.hideSpinner();
+                $state.go('tabs.user');
+            }, function (error) {
+                UtilsService.hideSpinner();
+                UtilsService.showAlert('Error en conexion');
+                return false;
+            });
+
+        };
+
+
+
     }
 
 });
