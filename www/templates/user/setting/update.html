@@ -1,5 +1,5 @@
 <ion-view title="Datos personales">
-    <ion-content class="mad-page-profile" overflow-scroll="true">
+    <ion-content class="page-profile" overflow-scroll="true">
 
         <div class="list">
             <label class="item item-input">
@@ -39,14 +39,14 @@
 
             <div class="button-bar">
                 <div class="button-bar padding">
-                    <a grouped-radio="'Hombre'" ng-model="personal.Sex">Hombre</a>
-                    <a grouped-radio="'Mujer'" ng-model="personal.Sex">Mujer</a>
+                    <a grouped-radio="Hombre" ng-model="personal.Sex" class="grouped-radio">Hombre</a>
+                    <a grouped-radio="Mujer" ng-model="personal.Sex" class="grouped-radio">Mujer</a>
                 </div>
             </div>
         </div>
 
         <div class="button-bar">
-            <button ng-click="commit(personal)" class="button mad-button-primary button-block margintop" style="border-color: white">
+            <button ng-click="update(user)" class="button button-primary button-block margintop" style="border-color: white">
                 Guardar cambios
             </button>
         </div>

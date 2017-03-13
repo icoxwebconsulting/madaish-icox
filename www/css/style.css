@@ -455,43 +455,35 @@ ion-modal-view {
     color: #000;
 }
 
-/*.button-bar {*/
-    /*display: -webkit-box;*/
-    /*display: -webkit-flex;*/
-    /*display: -moz-box;*/
-    /*display: -moz-flex;*/
-    /*display: -ms-flexbox;*/
-    /*display: flex;*/
-    /*-webkit-box-flex: 1;*/
-    /*-webkit-flex: 1;*/
-    /*-moz-box-flex: 1;*/
-    /*-moz-flex: 1;*/
-    /*-ms-flex: 1;*/
-    /*flex: 1;*/
-    /*!* width: 100%; *!*/
-/*}*/
-
-/*.padding {*/
-    /*padding: 10px;*/
-/*}*/
-
-/*.button {*/
-    /*border-color: transparent;*/
-    /*background-color: #f8f8f8;*/
-    /*color: #444;*/
-    /*position: relative;*/
-    /*display: inline-block;*/
-    /*margin: 0;*/
-    /*padding: 0 12px;*/
-    /*min-width: 52px;*/
-    /*min-height: 47px;*/
-    /*border-width: 1px;*/
-    /*border-style: solid;*/
-    /*border-radius: 4px;*/
-    /*vertical-align: top;*/
-    /*text-align: center;*/
-    /*text-overflow: ellipsis;*/
-    /*font-size: 16px;*/
-    /*line-height: 42px;*/
-    /*cursor: pointer;*/
-/*}*/
+.grouped-radio {
+    border-color: transparent;
+    background-color: #f8f8f8;
+    color: #444;
+    position: relative;
+    display: inline-block;
+    margin: 0;
+    padding: 0 12px;
+    min-width: 50%;
+    min-height: 47px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 4px;
+    vertical-align: top;
+    text-align: center;
+    text-overflow: ellipsis;
+    font-size: 16px;
+    line-height: 42px;
+    cursor: pointer; }
+.grouped-radio:hover {
+    color: #444;
+    text-decoration: none; }
+.grouped-radio:active, .grouped-radio.activated {
+    border-color: #a2a2a2;
+    background-color: #e5e5e5; }
+.grouped-radio:after {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    bottom: -6px;
+    left: -6px;
+    content: ' '; }

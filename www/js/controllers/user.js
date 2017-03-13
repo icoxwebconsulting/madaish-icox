@@ -126,7 +126,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
         });
     }
 
-    if($state.current.name == 'base.user-setting-profile')
+    if($state.current.name == 'base.user-setting-profile' || $state.current.name == 'base.user-setting-update' )
     {
         $scope.$on("$ionicView.enter", function(){
             UtilsService.setLastState('base.user-setting');
@@ -136,6 +136,18 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
         $scope.profile = {
             Avatar: UtilsService.getImageUrl(user.Avatar, API.image.user.path),
             Description: user.Description,
+            ReceiveEgoMail: user.ReceiveEgoMail
+        };
+
+        $scope.personal = {
+            Name: user.Name,
+            Surname: user.Surname,
+            Country: user.Country,
+            City: user.City,
+            PostalCode: user.PostalCode,
+            Phone: user.Phone,
+            BornDate: (user.BornDate != null) ? new Date(user.BornDate) : undefined,
+            Sex: (user.Sex != null) ? (user.Sex ? 'Mujer' : 'Hombre') : undefined,
             ReceiveEgoMail: user.ReceiveEgoMail
         };
 
@@ -160,7 +172,6 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
                 userResource[p] = value;
             }
 
-
             userResource.$updateProfile(function (response) {
                 UtilsService.hideSpinner();
                 UtilsService.showAlert('Perfil actualizado');
@@ -175,26 +186,14 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
 
 
     }
-    if($state.current.name == 'base.user-setting-update'){
-        $scope.$on("$ionicView.enter", function(){
-            UtilsService.setLastState('base.user-setting');
-        });
-        var user = UserService.getUser();
-
-        $scope.personal = {
-            Name: user.Name,
-            Surname: user.Surname,
-            Country: user.Country,
-            City: user.City,
-            PostalCode: user.PostalCode,
-            Phone: user.Phone,
-            BornDate: (user.BornDate != null) ? new Date(user.BornDate) : undefined,
-            Sex: (user.Sex != null) ? (user.Sex ? 'Mujer' : 'Hombre') : undefined,
-            ReceiveEgoMail: user.ReceiveEgoMail
-        }
-    }
 
     if($state.current.name == 'base.user-setting-password'){
+
+        $scope.change = {};
+        $scope.$watch('change', function(){
+            var f = $scope.change;
+            f.valid = f.currentPassword && f.password && f.repassword;
+        }, true);
 
         $scope.$on("$ionicView.enter", function(){
             UtilsService.setLastState('base.user-setting');
@@ -203,7 +202,7 @@ app.controller('UserController', function ($scope, $state, $stateParams, AuthSer
         $scope.changePassword = function(){
 
             var f = $scope.change;
-
+            console.log('f', f);
             if(f.password != f.repassword){
                 return UtilsService.showAlert("Las contraseñas deben ser iguales");
             }
