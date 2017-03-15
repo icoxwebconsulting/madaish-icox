@@ -49,7 +49,6 @@ app.controller('UserCardController', function ($scope, $state, PostService, User
 
     $scope.follow = function(){
 
-        console.info('user follow --> ', user);
 
         if(UserService.isLogged())
         {
