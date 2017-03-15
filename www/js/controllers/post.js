@@ -1,4 +1,4 @@
-app.controller('PostController', function ($rootScope, $scope, $state, $stateParams, AuthService, UserService, SocialService, UtilsService, PostService) {
+app.controller('PostController', function ($rootScope, $scope, $state, $stateParams, $timeout, AuthService, UserService, SocialService, UtilsService, PostService) {
 
     self.loadPost = function(){
         if($stateParams.content == 'post')
